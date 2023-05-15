@@ -1,6 +1,6 @@
 {
   "name": "migrate-angular-flex-to-tailwind",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI that migrates @angular/flex to tailwindcss",
   "main": "index.js",
   "bin": {
