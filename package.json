@@ -1,0 +1,33 @@
+{
+  "name": "migrate-angular-flex-to-tailwind",
+  "version": "1.0.0",
+  "description": "CLI that migrates @angular/flex to tailwindcss",
+  "main": "index.js",
+  "bin": {
+    "maftt": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smallstack/migrate-angular-flex-to-tailwind.git"
+  },
+  "keywords": [
+    "angular",
+    "flex",
+    "tailwindcss",
+    "tailwind",
+    "migrate",
+    "migration"
+  ],
+  "author": "smallstack GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smallstack/migrate-angular-flex-to-tailwind/issues"
+  },
+  "homepage": "https://github.com/smallstack/migrate-angular-flex-to-tailwind#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  }
+}
