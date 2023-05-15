@@ -80,6 +80,11 @@ function convertTag(tag) {
       return;
     }
 
+    if (fxFlex === "*") {
+      $(elem).addClass(`flex-auto`).removeAttr("fxFlex");
+      return;
+    }
+
     let widthClass = "";
     switch (+fxFlex) {
       case 33:
@@ -155,7 +160,8 @@ function convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap) {
 
   if (fxLayoutGap === undefined) return;
 
-  const spacing = Math.ceil(parseFloat(fxLayoutGap) * 4); // convert from em
+  let spacing = 0;
+  spacing = Math.ceil(parseFloat(fxLayoutGap) / 4); // convert from px
 
   if (layout === "row") {
     $element.addClass(`space-x-${spacing}`);
@@ -218,8 +224,10 @@ function convertFile(filePath) {
 
 function processFiles(folderPath, processFile, processFolder, level = 0) {
   if (fs.existsSync(folderPath)) {
+    // console.log(`folderPath: ${folderPath}`);
     fs.readdirSync(folderPath).forEach((file) => {
       const currentPath = path.join(folderPath, file);
+      // console.log(`currentPath: ${currentPath}`);
       if (fs.lstatSync(currentPath).isDirectory()) {
         if (
           currentPath.endsWith("node_modules") ||
@@ -239,6 +247,7 @@ function processFiles(folderPath, processFile, processFolder, level = 0) {
     });
     return true;
   } else {
+    console.log(`Could not find folderPath: ${folderPath}`);
     return false;
   }
 }
