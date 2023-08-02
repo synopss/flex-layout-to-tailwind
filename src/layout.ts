@@ -1,5 +1,9 @@
-const LAYOUT_VALUES = ['row', 'column', 'row-reverse', 'column-reverse'];
+export const LAYOUT_VALUES = ['row', 'column', 'row-reverse', 'column-reverse'];
 export const INLINE = 'inline';
+export const TAILWIND_LAYOUT_VALUES = ['flex-row', 'flex-col', 'flex-row-reverse', 'flex-col-reverse'];
+export const TAILWIND_ROW_VALUES = ['flex-row', 'flex-row-reverse'];
+export const TAILWIND_COLUMN_VALUES = ['flex-col', 'flex-col-reverse'];
+export const TAILWIND_FLEX_VALUES = ['flex', 'inline-flex'];
 
 export function convertFxLayoutToTailwind($element: cheerio.Cheerio, value: string): void {
   let [direction, wrap, flex] = validateValue(value);

@@ -2,23 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { load } from "cheerio"
 import { convertFxLayoutToTailwind } from './layout'
-
-const mainAxisMap = {
-  start: "justify-start",
-  center: "justify-center",
-  end: "justify-end",
-  "space-around": "justify-around",
-  "space-between": "justify-between",
-  "space-evenly": "justify-evenly",
-};
-
-const crossAxisMap = {
-  start: "items-start",
-  center: "items-center",
-  end: "items-end",
-  baseline: "items-baseline",
-  stretch: "items-stretch",
-};
+import { convertFxLayoutAlignToTailwind } from './layout-align'
 
 const fxAttributes = ["fxFill", "fxLayout", "fxLayoutAlign", "fxGap", "fxFlex"];
 
@@ -42,32 +26,16 @@ export function convertTag(tag) {
     const fxLayoutGap = $element.attr("fxLayoutGap");
     const fxLayoutAlign = $element.attr("fxLayoutAlign");
 
+    if (fxLayoutAlign != undefined) {
+      convertFxLayoutAlignToTailwind($element, fxLayoutAlign);
+    }
+    
     if (fxLayout !== undefined) {
       convertFxLayoutToTailwind($element, fxLayout);
     }
 
     if (fxLayoutGap) {
       convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap);
-    }
-
-    if (fxLayoutAlign) {
-      const [mainAxis, crossAxis] = fxLayoutAlign.split(" ");
-
-      if (mainAxis !== "start" && crossAxis !== "start") {
-        $element
-          .addClass(
-            `${mainAxisMap[mainAxis] || ""} ${crossAxisMap[crossAxis] || ""}`
-          )
-          .removeAttr("fxLayoutAlign");
-      } else if (mainAxis !== "start") {
-        $element
-          .addClass(`${mainAxisMap[mainAxis] || ""}`)
-          .removeAttr("fxLayoutAlign");
-      } else {
-        $element
-          .addClass(crossAxisMap[crossAxis] || "")
-          .removeAttr("fxLayoutAlign");
-      }
     }
   });
 
