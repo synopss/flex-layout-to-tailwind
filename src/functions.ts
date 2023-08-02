@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const { load } = require("cheerio");
+import * as fs from 'fs'
+import * as path from 'path'
+import { load } from "cheerio"
 
 const mainAxisMap = {
   start: "justify-start",
@@ -21,7 +21,7 @@ const crossAxisMap = {
 
 const fxAttributes = ["fxFill", "fxLayout", "fxLayoutAlign", "fxGap", "fxFlex"];
 
-function convertFlexLayoutToTailwind(filePath) {
+export function convertFlexLayoutToTailwind(filePath) {
   const html = fs.readFileSync(filePath, "utf-8");
   return extractHtmlTags(html).reduce(
     (html, tag) => html.replace(tag, convertTag(tag)),
@@ -29,7 +29,7 @@ function convertFlexLayoutToTailwind(filePath) {
   );
 }
 
-function convertTag(tag) {
+export function convertTag(tag) {
   if (!fxAttributes.some((a) => tag.includes(a))) return tag;
 
   const $ = load(tag, { xmlMode: true, decodeEntities: false });
@@ -118,7 +118,7 @@ function convertTag(tag) {
   }
 }
 
-function convertFxLayoutToTailwind($element, fxLayout) {
+export function convertFxLayoutToTailwind($element, fxLayout) {
   let [layout, other] = (fxLayout || "row").split(" ");
 
   let className = "";
@@ -170,14 +170,14 @@ function convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap) {
   $element.removeAttr("fxLayoutGap");
 }
 
-function gcd(a, b) {
+export function gcd(a, b) {
   if (!b) {
     return a;
   }
   return gcd(b, a % b);
 }
 
-function percentageToFraction(percentage) {
+export function percentageToFraction(percentage) {
   const denominator = 100;
   const numerator = parseInt(percentage);
   const gcdValue = gcd(numerator, denominator);
@@ -186,7 +186,7 @@ function percentageToFraction(percentage) {
   return `${simplifiedNumerator}/${simplifiedDenominator}`;
 }
 
-function extractHtmlTags(html) {
+export function extractHtmlTags(html) {
   let openingTags = [];
   let tag = "";
   let inTag = false;
@@ -214,13 +214,13 @@ function extractHtmlTags(html) {
   return openingTags;
 }
 
-function convertFile(filePath) {
+export function convertFile(filePath) {
   const convertedData = convertFlexLayoutToTailwind(filePath);
   fs.writeFileSync(filePath, convertedData, "utf-8");
   console.log(`File converted successfully: ${filePath}`);
 }
 
-function processFiles(folderPath, processFile, processFolder, level = 0) {
+export function processFiles(folderPath, processFile, processFolder, level = 0) {
   if (fs.existsSync(folderPath)) {
     // console.log(`folderPath: ${folderPath}`);
     fs.readdirSync(folderPath).forEach((file) => {
@@ -249,14 +249,3 @@ function processFiles(folderPath, processFile, processFolder, level = 0) {
     return false;
   }
 }
-
-module.exports = {
-  convertFlexLayoutToTailwind,
-  processFiles,
-  convertFile,
-  convertTag,
-  extractHtmlTags,
-  convertFlexLayoutToTailwind,
-  extractHtmlTags,
-  percentageToFraction,
-};
