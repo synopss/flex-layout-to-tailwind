@@ -41,7 +41,7 @@ function convertTag(tag) {
     const fxLayoutGap = $element.attr("fxLayoutGap");
     const fxLayoutAlign = $element.attr("fxLayoutAlign");
 
-    if (fxLayout) {
+    if (fxLayout !== undefined) {
       convertFxLayoutToTailwind($element, fxLayout);
     }
 
@@ -119,7 +119,7 @@ function convertTag(tag) {
 }
 
 function convertFxLayoutToTailwind($element, fxLayout) {
-  let [layout, other] = (fxLayout || "column").split(" ");
+  let [layout, other] = (fxLayout || "row").split(" ");
 
   let className = "";
   switch (layout) {
