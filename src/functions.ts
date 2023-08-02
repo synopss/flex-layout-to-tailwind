@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { load } from "cheerio"
+import { convertFxLayoutToTailwind } from './layout'
 
 const mainAxisMap = {
   start: "justify-start",
@@ -116,41 +117,6 @@ export function convertTag(tag) {
   } else {
     return newTag.slice(0, -2) + ">";
   }
-}
-
-export function convertFxLayoutToTailwind($element, fxLayout) {
-  let [layout, other] = (fxLayout || "row").split(" ");
-
-  let className = "";
-  switch (layout) {
-    case "row":
-      className = "flex-row";
-      break;
-    case "column":
-      className = "flex-col";
-      break;
-    case "row-reverse":
-      className = "flex-row-reverse";
-      break;
-    case "column-reverse":
-      className = "flex-col-reverse";
-      break;
-    default:
-      return;
-  }
-
-  $element.addClass(`flex ${className}`);
-
-  if (other === "wrap") {
-    $element.addClass("flex-wrap");
-  }
-
-  if (other === "inline") {
-    $element.removeClass("flex");
-    $element.addClass("inline-flex");
-  }
-
-  $element.removeAttr("fxLayout");
 }
 
 function convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap) {
