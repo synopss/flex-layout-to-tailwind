@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as path from 'path';
 import { load } from 'cheerio';
 import { convertFxLayoutToTailwind } from './layout';
 import { convertFxLayoutAlignToTailwind } from './layout-align';
@@ -7,12 +6,12 @@ import { convertFxLayoutGapToTailwind } from './layout-gap';
 
 const fxAttributes = ['fxFill', 'fxLayout', 'fxLayoutAlign', 'fxGap', 'fxFlex'];
 
-export function convertFlexLayoutToTailwind(filePath) {
+export function convertFlexLayoutToTailwind(filePath: string) {
   const html = fs.readFileSync(filePath, 'utf-8');
   return extractHtmlTags(html).reduce((html, tag) => html.replace(tag, convertTag(tag)), html);
 }
 
-export function convertTag(tag) {
+export function convertTag(tag: string): string {
   if (!fxAttributes.some(a => tag.includes(a))) return tag;
 
   const $ = load(tag, { xmlMode: true, decodeEntities: false });
@@ -33,7 +32,7 @@ export function convertTag(tag) {
     }
 
     if (fxLayoutGap != undefined) {
-      convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap);
+      convertFxLayoutGapToTailwind($element, fxLayout ?? '', fxLayoutGap);
     }
   });
 
@@ -62,7 +61,7 @@ export function convertTag(tag) {
         widthClass = 'full';
         break;
       default:
-        widthClass = percentageToFraction(parseInt(fxFlex));
+        widthClass = percentageToFraction(fxFlex);
         break;
     }
 
@@ -83,14 +82,14 @@ export function convertTag(tag) {
   }
 }
 
-export function gcd(a, b) {
+export function gcd(a: number, b: number): number {
   if (!b) {
     return a;
   }
   return gcd(b, a % b);
 }
 
-export function percentageToFraction(percentage) {
+export function percentageToFraction(percentage: string): string {
   const denominator = 100;
   const numerator = parseInt(percentage);
   const gcdValue = gcd(numerator, denominator);
@@ -99,7 +98,7 @@ export function percentageToFraction(percentage) {
   return `${simplifiedNumerator}/${simplifiedDenominator}`;
 }
 
-export function extractHtmlTags(html) {
+export function extractHtmlTags(html: string): string[] {
   const openingTags = [];
   let tag = '';
   let inTag = false;
@@ -125,37 +124,4 @@ export function extractHtmlTags(html) {
   }
 
   return openingTags;
-}
-
-export function convertFile(filePath) {
-  const convertedData = convertFlexLayoutToTailwind(filePath);
-  fs.writeFileSync(filePath, convertedData, 'utf-8');
-  console.log(`File converted successfully: ${filePath}`);
-}
-
-export function processFiles(folderPath, processFile, processFolder, level = 0) {
-  if (fs.existsSync(folderPath)) {
-    // console.log(`folderPath: ${folderPath}`);
-    fs.readdirSync(folderPath).forEach(file => {
-      const currentPath = path.join(folderPath, file);
-      // console.log(`currentPath: ${currentPath}`);
-      if (fs.lstatSync(currentPath).isDirectory()) {
-        if (currentPath.endsWith('node_modules') || currentPath.endsWith('dist')) {
-          return;
-        }
-
-        if (processFiles(currentPath, processFile, processFolder, level + 1)) {
-          processFolder?.(currentPath);
-        }
-      } else {
-        if (currentPath.endsWith('.html')) {
-          processFile(currentPath, level);
-        }
-      }
-    });
-    return true;
-  } else {
-    console.log(`Could not find folderPath: ${folderPath}`);
-    return false;
-  }
 }

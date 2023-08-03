@@ -1,8 +1,9 @@
+import * as cheerio from 'cheerio';
 import { validateFxLayoutValue } from './layout';
 import { TAILWIND_COLUMN_VALUES, TAILWIND_DEFAULT_SPACING_VALUES, TAILWIND_ROW_VALUES } from './tailwind';
 
 //TODO: handle grid
-export function convertFxLayoutGapToTailwind($element: cheerio.Cheerio, fxLayout: string, value: string): void {
+export function convertFxLayoutGapToTailwind($element: cheerio.Cheerio<any>, fxLayout: string, value: string): void {
   const { direction, flex } = validateFxLayoutValue(fxLayout);
   const { gap, grid } = validateFxLayoutGapValue(value, direction);
 
@@ -64,6 +65,8 @@ function validatePercentGap(value: string, direction: string): string {
     axis = 'y';
   } else if (TAILWIND_ROW_VALUES.includes(direction)) {
     axis = 'x';
+  } else {
+    return '';
   }
   return `space-${axis}-[${value}]`;
 }
