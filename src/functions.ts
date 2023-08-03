@@ -3,6 +3,7 @@ import * as path from 'path'
 import { load } from "cheerio"
 import { convertFxLayoutToTailwind } from './layout'
 import { convertFxLayoutAlignToTailwind } from './layout-align'
+import { convertFxLayoutGapToTailwind } from './layout-gap'
 
 const fxAttributes = ["fxFill", "fxLayout", "fxLayoutAlign", "fxGap", "fxFlex"];
 
@@ -34,7 +35,7 @@ export function convertTag(tag) {
       convertFxLayoutToTailwind($element, fxLayout);
     }
 
-    if (fxLayoutGap) {
+    if (fxLayoutGap != undefined) {
       convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap);
     }
   });
@@ -85,23 +86,6 @@ export function convertTag(tag) {
   } else {
     return newTag.slice(0, -2) + ">";
   }
-}
-
-function convertFxLayoutGapToTailwind($element, fxLayout, fxLayoutGap) {
-  let [layout] = (fxLayout || "column").split(" ");
-
-  if (fxLayoutGap === undefined) return;
-
-  let spacing = 0;
-  spacing = Math.ceil(parseFloat(fxLayoutGap) / 4); // convert from px
-
-  if (layout === "row") {
-    $element.addClass(`space-x-${spacing}`);
-  } else {
-    $element.addClass(`space-y-${spacing}`);
-  }
-
-  $element.removeAttr("fxLayoutGap");
 }
 
 export function gcd(a, b) {

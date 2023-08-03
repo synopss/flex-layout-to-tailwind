@@ -1,19 +1,15 @@
 export const LAYOUT_VALUES = ['row', 'column', 'row-reverse', 'column-reverse'];
 export const INLINE = 'inline';
-export const TAILWIND_LAYOUT_VALUES = ['flex-row', 'flex-col', 'flex-row-reverse', 'flex-col-reverse'];
-export const TAILWIND_ROW_VALUES = ['flex-row', 'flex-row-reverse'];
-export const TAILWIND_COLUMN_VALUES = ['flex-col', 'flex-col-reverse'];
-export const TAILWIND_FLEX_VALUES = ['flex', 'inline-flex'];
 
 export function convertFxLayoutToTailwind($element: cheerio.Cheerio, value: string): void {
-  let [direction, wrap, flex] = validateValue(value);
+  let { direction, wrap, flex } = validateFxLayoutValue(value);
 
   $element
     .addClass(`${flex} ${direction} ${wrap}`)
     .removeAttr('fxLayout');
 }
 
-function validateValue(value: string): [string, string, string] {
+export function validateFxLayoutValue(value: string) {
   value = value?.toLowerCase() ?? '';
   let [direction, wrap, inline] = value.split(' ');
   
@@ -26,7 +22,11 @@ function validateValue(value: string): [string, string, string] {
     inline = INLINE;
   }
   
-  return [validateDirection(direction), validateWrap(wrap), validateFlex(!!inline)];
+  return { 
+    direction: validateDirection(direction),
+    wrap: validateWrap(wrap),
+    flex: validateFlex(!!inline),
+  };
 }
 
 function validateDirection(value: string): string {

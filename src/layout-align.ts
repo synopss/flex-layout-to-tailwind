@@ -1,7 +1,7 @@
-import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, TAILWIND_LAYOUT_VALUES, TAILWIND_FLEX_VALUES } from './layout'
+import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, TAILWIND_LAYOUT_VALUES, TAILWIND_FLEX_VALUES } from './tailwind'
 
 export function convertFxLayoutAlignToTailwind($element: cheerio.Cheerio, value: string): void {
-  const [mainAxis, crossAxis] = validateValue(value);
+  const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);
   const [flex, direction, dimension] = validateParent($element);
 
   $element
@@ -9,10 +9,13 @@ export function convertFxLayoutAlignToTailwind($element: cheerio.Cheerio, value:
     .removeAttr("fxLayoutAlign");
 }
 
-function validateValue(value: string): [string, string] {
+function validateFxLayoutAlignValue(value: string) {
   value = value?.toLowerCase() ?? '';
   const [mainAxis, crossAxis] = value.split(' ');
-  return [validateMainAxis(mainAxis), validateCrossAxis(crossAxis)];
+  return {
+    mainAxis: validateMainAxis(mainAxis),
+    crossAxis: validateCrossAxis(crossAxis),
+  };
 }
 
 function validateMainAxis(value: string): string {
