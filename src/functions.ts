@@ -1,36 +1,33 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import { load } from "cheerio"
-import { convertFxLayoutToTailwind } from './layout'
-import { convertFxLayoutAlignToTailwind } from './layout-align'
-import { convertFxLayoutGapToTailwind } from './layout-gap'
+import * as fs from 'fs';
+import * as path from 'path';
+import { load } from 'cheerio';
+import { convertFxLayoutToTailwind } from './layout';
+import { convertFxLayoutAlignToTailwind } from './layout-align';
+import { convertFxLayoutGapToTailwind } from './layout-gap';
 
-const fxAttributes = ["fxFill", "fxLayout", "fxLayoutAlign", "fxGap", "fxFlex"];
+const fxAttributes = ['fxFill', 'fxLayout', 'fxLayoutAlign', 'fxGap', 'fxFlex'];
 
 export function convertFlexLayoutToTailwind(filePath) {
-  const html = fs.readFileSync(filePath, "utf-8");
-  return extractHtmlTags(html).reduce(
-    (html, tag) => html.replace(tag, convertTag(tag)),
-    html
-  );
+  const html = fs.readFileSync(filePath, 'utf-8');
+  return extractHtmlTags(html).reduce((html, tag) => html.replace(tag, convertTag(tag)), html);
 }
 
 export function convertTag(tag) {
-  if (!fxAttributes.some((a) => tag.includes(a))) return tag;
+  if (!fxAttributes.some(a => tag.includes(a))) return tag;
 
   const $ = load(tag, { xmlMode: true, decodeEntities: false });
 
-  $("[fxLayout], [fxLayoutGap], [fxLayoutAlign]").each((_, element) => {
+  $('[fxLayout], [fxLayoutGap], [fxLayoutAlign]').each((_, element) => {
     const $element = $(element);
 
-    const fxLayout = $element.attr("fxLayout");
-    const fxLayoutGap = $element.attr("fxLayoutGap");
-    const fxLayoutAlign = $element.attr("fxLayoutAlign");
+    const fxLayout = $element.attr('fxLayout');
+    const fxLayoutGap = $element.attr('fxLayoutGap');
+    const fxLayoutAlign = $element.attr('fxLayoutAlign');
 
     if (fxLayoutAlign != undefined) {
       convertFxLayoutAlignToTailwind($element, fxLayoutAlign);
     }
-    
+
     if (fxLayout !== undefined) {
       convertFxLayoutToTailwind($element, fxLayout);
     }
@@ -40,51 +37,49 @@ export function convertTag(tag) {
     }
   });
 
-  $("[fxFlex]").each((_, elem) => {
-    let fxFlex = $(elem).attr("fxFlex");
+  $('[fxFlex]').each((_, elem) => {
+    const fxFlex = $(elem).attr('fxFlex');
 
     if (!fxFlex) {
-      $(elem).addClass(`flex-1`).removeAttr("fxFlex");
+      $(elem).addClass(`flex-1`).removeAttr('fxFlex');
       return;
     }
 
-    if (fxFlex === "*") {
-      $(elem).addClass(`flex-auto`).removeAttr("fxFlex");
+    if (fxFlex === '*') {
+      $(elem).addClass(`flex-auto`).removeAttr('fxFlex');
       return;
     }
 
-    let widthClass = "";
+    let widthClass = '';
     switch (parseInt(fxFlex)) {
       case 33:
-        widthClass = "1/3";
+        widthClass = '1/3';
         break;
       case 66:
-        widthClass = "2/3";
+        widthClass = '2/3';
         break;
       case 100:
-        widthClass = "full";
+        widthClass = 'full';
         break;
       default:
         widthClass = percentageToFraction(parseInt(fxFlex));
         break;
     }
 
-    $(elem).addClass(`basis-${widthClass}`).removeAttr("fxFlex");
+    $(elem).addClass(`basis-${widthClass}`).removeAttr('fxFlex');
   });
 
-  $("[fxFill]").each((_, elem) => {
-    $(elem)
-      .addClass(`h-full w-full min-h-full min-w-full`)
-      .removeAttr("fxFill");
+  $('[fxFill]').each((_, elem) => {
+    $(elem).addClass(`h-full w-full min-h-full min-w-full`).removeAttr('fxFill');
   });
 
   let newTag = $.html();
-  newTag = newTag.replace(/(\W\w+)=""/gm, "$1");
+  newTag = newTag.replace(/(\W\w+)=""/gm, '$1');
 
-  if (newTag.endsWith("/>") && tag.endsWith("/>")) {
+  if (newTag.endsWith('/>') && tag.endsWith('/>')) {
     return newTag;
   } else {
-    return newTag.slice(0, -2) + ">";
+    return newTag.slice(0, -2) + '>';
   }
 }
 
@@ -105,13 +100,13 @@ export function percentageToFraction(percentage) {
 }
 
 export function extractHtmlTags(html) {
-  let openingTags = [];
-  let tag = "";
+  const openingTags = [];
+  let tag = '';
   let inTag = false;
   let quote = null;
 
   for (const ch of [...html]) {
-    if (!inTag && ch === "<") {
+    if (!inTag && ch === '<') {
       inTag = true;
       tag += ch;
     } else if (inTag) {
@@ -121,9 +116,9 @@ export function extractHtmlTags(html) {
         quote = ch;
       } else if (quote !== null && ch === quote) {
         quote = null;
-      } else if (quote === null && ch === ">") {
+      } else if (quote === null && ch === '>') {
         openingTags.push(tag);
-        tag = "";
+        tag = '';
         inTag = false;
       }
     }
@@ -134,21 +129,18 @@ export function extractHtmlTags(html) {
 
 export function convertFile(filePath) {
   const convertedData = convertFlexLayoutToTailwind(filePath);
-  fs.writeFileSync(filePath, convertedData, "utf-8");
+  fs.writeFileSync(filePath, convertedData, 'utf-8');
   console.log(`File converted successfully: ${filePath}`);
 }
 
 export function processFiles(folderPath, processFile, processFolder, level = 0) {
   if (fs.existsSync(folderPath)) {
     // console.log(`folderPath: ${folderPath}`);
-    fs.readdirSync(folderPath).forEach((file) => {
+    fs.readdirSync(folderPath).forEach(file => {
       const currentPath = path.join(folderPath, file);
       // console.log(`currentPath: ${currentPath}`);
       if (fs.lstatSync(currentPath).isDirectory()) {
-        if (
-          currentPath.endsWith("node_modules") ||
-          currentPath.endsWith("dist")
-        ) {
+        if (currentPath.endsWith('node_modules') || currentPath.endsWith('dist')) {
           return;
         }
 
@@ -156,7 +148,7 @@ export function processFiles(folderPath, processFile, processFolder, level = 0) 
           processFolder?.(currentPath);
         }
       } else {
-        if (currentPath.endsWith(".html")) {
+        if (currentPath.endsWith('.html')) {
           processFile(currentPath, level);
         }
       }

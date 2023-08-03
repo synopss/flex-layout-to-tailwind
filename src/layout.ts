@@ -2,27 +2,25 @@ export const LAYOUT_VALUES = ['row', 'column', 'row-reverse', 'column-reverse'];
 export const INLINE = 'inline';
 
 export function convertFxLayoutToTailwind($element: cheerio.Cheerio, value: string): void {
-  let { direction, wrap, flex } = validateFxLayoutValue(value);
+  const { direction, wrap, flex } = validateFxLayoutValue(value);
 
-  $element
-    .addClass(`${flex} ${direction} ${wrap}`)
-    .removeAttr('fxLayout');
+  $element.addClass(`${flex} ${direction} ${wrap}`).removeAttr('fxLayout');
 }
 
 export function validateFxLayoutValue(value: string) {
   value = value?.toLowerCase() ?? '';
   let [direction, wrap, inline] = value.split(' ');
-  
+
   if (!LAYOUT_VALUES.find(x => x === direction)) {
     direction = LAYOUT_VALUES[0];
   }
-  
+
   if (wrap === INLINE) {
-    wrap = (inline !== INLINE) ? inline : '';
+    wrap = inline !== INLINE ? inline : '';
     inline = INLINE;
   }
-  
-  return { 
+
+  return {
     direction: validateDirection(direction),
     wrap: validateWrap(wrap),
     flex: validateFlex(!!inline),

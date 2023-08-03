@@ -1,4 +1,4 @@
-import { convertTag } from './functions'
+import { convertTag } from './functions';
 
 describe('fxLayoutGap directive migration', () => {
   it('should convert fxLayoutGap default value', () => {
@@ -18,6 +18,8 @@ describe('fxLayoutGap directive migration', () => {
 
   it('should convert fxLayoutGap with % values', () => {
     expect(convertTag(`<div fxLayout="row" fxLayoutGap="10%">`)).toEqual(`<div class="flex flex-row space-x-[10%]">`);
-    expect(convertTag(`<div fxLayout="column" fxLayoutGap="10%">`)).toEqual(`<div class="flex flex-col space-y-[10%]">`);
+    expect(convertTag(`<div fxLayout="column" fxLayoutGap="10%">`)).toEqual(
+      `<div class="flex flex-col space-y-[10%]">`,
+    );
   });
 });

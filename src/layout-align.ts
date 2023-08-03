@@ -1,12 +1,10 @@
-import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, TAILWIND_LAYOUT_VALUES, TAILWIND_FLEX_VALUES } from './tailwind'
+import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, TAILWIND_LAYOUT_VALUES, TAILWIND_FLEX_VALUES } from './tailwind';
 
 export function convertFxLayoutAlignToTailwind($element: cheerio.Cheerio, value: string): void {
   const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);
   const [flex, direction, dimension] = validateParent($element);
 
-  $element
-    .addClass(`${flex} ${direction} ${mainAxis} ${crossAxis} ${dimension}`)
-    .removeAttr("fxLayoutAlign");
+  $element.addClass(`${flex} ${direction} ${mainAxis} ${crossAxis} ${dimension}`).removeAttr('fxLayoutAlign');
 }
 
 function validateFxLayoutAlignValue(value: string) {
@@ -74,11 +72,8 @@ function validateCrossAxis(value: string): string {
 }
 
 function validateParent($element: cheerio.Cheerio): [string, string, string] {
-  const parent = $element
-    .parent()
-    .attr("class")
-    ?.split(' ') ?? [];
-  
+  const parent = $element.parent().attr('class')?.split(' ') ?? [];
+
   const flex = parent.find(x => TAILWIND_FLEX_VALUES.includes(x)) ?? 'flex';
   const direction = parent.find(x => TAILWIND_LAYOUT_VALUES.includes(x)) ?? '';
   let dimension = '';
@@ -88,6 +83,6 @@ function validateParent($element: cheerio.Cheerio): [string, string, string] {
   } else if (parent.find(x => TAILWIND_COLUMN_VALUES.includes(x))) {
     dimension = 'w-full';
   }
-  
+
   return [flex, direction, dimension];
 }

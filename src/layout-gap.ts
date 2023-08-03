@@ -1,5 +1,5 @@
-import { validateFxLayoutValue } from './layout'
-import { TAILWIND_COLUMN_VALUES, TAILWIND_DEFAULT_SPACING_VALUES, TAILWIND_ROW_VALUES } from './tailwind'
+import { validateFxLayoutValue } from './layout';
+import { TAILWIND_COLUMN_VALUES, TAILWIND_DEFAULT_SPACING_VALUES, TAILWIND_ROW_VALUES } from './tailwind';
 
 //TODO: handle grid
 export function convertFxLayoutGapToTailwind($element: cheerio.Cheerio, fxLayout: string, value: string): void {
@@ -19,7 +19,7 @@ export function convertFxLayoutGapToTailwind($element: cheerio.Cheerio, fxLayout
   //   $element.addClass(`space-y-${spacing}`);
   // }
 
-  $element.removeAttr("fxLayoutGap");
+  $element.removeAttr('fxLayoutGap');
 }
 
 function validateFxLayoutGapValue(value: string, direction: string) {
@@ -47,8 +47,8 @@ function validateGap(value: string, direction: string): string {
 }
 
 function validatePxGap(value: string): string {
-  const numberValue = +(value.slice(0, -2))
-  const possibleTailwindNumber = numberValue / 4
+  const numberValue = +value.slice(0, -2);
+  const possibleTailwindNumber = numberValue / 4;
   if (TAILWIND_DEFAULT_SPACING_VALUES.includes(possibleTailwindNumber)) {
     return `gap-${numberValue / 4}`;
   }
