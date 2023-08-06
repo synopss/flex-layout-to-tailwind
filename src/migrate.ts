@@ -1,10 +1,18 @@
+import chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 import process from 'process';
 import { convertFlexLayoutToTailwind } from './functions';
 
 export async function migrate(inputPath: string): Promise<void> {
-  const stat = await fs.promises.stat(inputPath);
+  let stat: fs.Stats;
+
+  try {
+    stat = await fs.promises.stat(inputPath);
+  } catch (error) {
+    console.error(chalk.red(error));
+    process.exit(1);
+  }
 
   if (stat.isFile()) {
     if (!isSupportedFileExtension(path.extname(inputPath))) {
@@ -15,6 +23,8 @@ export async function migrate(inputPath: string): Promise<void> {
   } else if (stat.isDirectory()) {
     convertDirectory(inputPath);
   }
+
+  console.log(chalk.green('Migration done.'));
 }
 
 function convertFile(filePath: string): void {

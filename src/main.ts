@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+import { input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import * as fs from 'fs';
@@ -11,14 +12,24 @@ interface ProgramOptions {
 
 const handleArguments = async (options: ProgramOptions) => {
   try {
-    const input = options.input ?? '.';
-    await migrate(input);
+    let input = options.input;
+
+    if (input) {
+      await migrate(input);
+    } else {
+      input = await handlePrompt();
+      await migrate(input);
+    }
   } catch (error) {
     console.error(chalk.red('Failed to execute the command. Error: '), error);
   }
 };
 
-async function main() {
+async function handlePrompt(): Promise<string> {
+  return await input({ message: 'Enter your project path to migrate' });
+}
+
+async function main(): Promise<void> {
   const program = new Command();
 
   program.version('1.0.0').description('CLI that migrates @angular/flex to tailwindcss');
