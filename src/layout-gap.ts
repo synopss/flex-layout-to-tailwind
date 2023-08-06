@@ -1,49 +1,49 @@
 import { Cheerio, Element } from 'cheerio';
 import { validateFxLayoutValue } from './layout';
-import { TAILWIND_COLUMN_VALUES, TAILWIND_DEFAULT_SPACING_VALUES, TAILWIND_ROW_VALUES } from './tailwind';
+import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from './tailwind';
 
-//TODO: handle grid
 export function convertFxLayoutGapToTailwind($element: Cheerio<Element>, fxLayout: string, value: string): void {
   const { direction, flex } = validateFxLayoutValue(fxLayout);
-  const { gap, grid } = validateFxLayoutGapValue(value, direction);
+  const { gap, child } = validateFxLayoutGapValue(value, direction);
 
-  $element.addClass(`${flex} ${gap} ${grid}`).removeAttr('fxLayoutGap');
+  $element.addClass(`${flex} ${gap}`).removeAttr('fxLayoutGap').children().addClass(child);
 }
 
 function validateFxLayoutGapValue(value: string, direction: string) {
   value = value?.toLowerCase() ?? '';
   const [gap, grid] = value.split(' ');
+
+  return validateGap(gap, direction, grid);
+}
+
+function validateGap(value: string, direction: string, grid: string) {
+  const isPx = value.endsWith('px');
+  const isPercent = value.endsWith('%');
+  let gap: string;
+
+  if (grid) {
+    gap = validateGridGap(value);
+  } else if (isPx) {
+    gap = validatePxGap(value);
+  } else if (isPercent) {
+    gap = validatePercentGap(value, direction);
+  } else {
+    gap = '';
+  }
+
   return {
-    gap: validateGap(gap, direction),
-    grid: grid ?? '',
+    gap,
+    child: grid ? validateGridChild(value) : '',
   };
 }
 
-function validateGap(value: string, direction: string): string {
-  const isPx = value.endsWith('px');
-  const isPercent = value.endsWith('%');
-
-  if (isPx) {
-    value = validatePxGap(value);
-  } else if (isPercent) {
-    value = validatePercentGap(value, direction);
-  } else {
-    return '';
-  }
-
-  return value;
+function validateGridGap(value: string): string {
+  const tailwindValue = toTailwindValue(value);
+  return `-mr-${tailwindValue} -mb-${tailwindValue}`;
 }
 
 function validatePxGap(value: string): string {
-  const numberValue = +value.slice(0, -2);
-  const possibleTailwindNumber = numberValue / 4;
-  if (TAILWIND_DEFAULT_SPACING_VALUES.includes(possibleTailwindNumber)) {
-    return `gap-${numberValue / 4}`;
-  }
-  if (numberValue === 1) {
-    return `gap-px`;
-  }
-  return `gap-[${numberValue}px]`;
+  return `gap-${toTailwindValue(value)}`;
 }
 
 function validatePercentGap(value: string, direction: string): string {
@@ -56,4 +56,10 @@ function validatePercentGap(value: string, direction: string): string {
     return '';
   }
   return `space-${axis}-[${value}]`;
+}
+
+function validateGridChild(value: string): string {
+  const tailwindValue = toTailwindValue(value);
+
+  return `pr-${tailwindValue} pb-${tailwindValue}`;
 }

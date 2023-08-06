@@ -6,3 +6,19 @@ export const TAILWIND_LAYOUT_VALUES = ['flex-row', 'flex-col', 'flex-row-reverse
 export const TAILWIND_ROW_VALUES = ['flex-row', 'flex-row-reverse'];
 export const TAILWIND_COLUMN_VALUES = ['flex-col', 'flex-col-reverse'];
 export const TAILWIND_FLEX_VALUES = ['flex', 'inline-flex'];
+
+export function toTailwindValue(value: string): string {
+  if (value.endsWith('%')) {
+    return `[${value}]`;
+  }
+
+  const numberValue = +value.slice(0, -2);
+  const possibleTailwindNumber = numberValue / 4;
+  if (TAILWIND_DEFAULT_SPACING_VALUES.includes(possibleTailwindNumber)) {
+    return `${numberValue / 4}`;
+  }
+  if (numberValue === 1) {
+    return `px`;
+  }
+  return `[${numberValue}px]`;
+}
