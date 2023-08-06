@@ -4,7 +4,7 @@ Any contribution to improve the Angular Flex-Layout to Tailwind migrator is high
 
 ## Got a Question ?
 
-If you want to ask a question, we assume you have read the [README]().
+If you want to ask a question, we assume you have read the [README](readme).
 
 Before you ask a question, it is best to search for existing [Issues](/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
 

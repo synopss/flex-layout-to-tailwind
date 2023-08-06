@@ -3,7 +3,7 @@
 This CLI helps you to migrate projects from the deprecated Angular Flex-Layout library to tailwindcss utility classes.
 This package has for goal to cover all cases seen in the Angular Flex-Layout library.
 
-**This project is still under development. Use it at your own risks.**
+**:construction: This project is still under development. Use it at your own risks. :construction:**
 
 ## Installation
 
@@ -70,3 +70,15 @@ This following tables show all attributes covered by the migration from this CLI
 | ngClass               | :x:        | :x:            |
 | ngStyle               | :x:        | :x:            |
 | imgSrc                | :x:        | :x:            |
+
+## Contributing
+
+Want to report a bug or contribute some code? Amazing! Please read up on our guidelines for [contributing](contributing).
+
+## Code of Conduct
+
+Please read and follow our [Code of Conduct](code_of_conduct).
+
+## License
+
+This project is licensed under the MIT License.
