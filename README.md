@@ -26,7 +26,7 @@ maftt --input ./path/to/your/project
 
 ## Status
 
-Flex-Layout has two APIs: a static and a responsive one. The first one is used to handle fixed values, the second one add breakpoints to handle responsiveness.
+Flex-Layout has two APIs: a static and a responsive one. The first one is used to handle fixed values, the second one adds breakpoints to handle responsiveness.
 
 This following tables show all attributes covered by the migration from this CLI.
 
