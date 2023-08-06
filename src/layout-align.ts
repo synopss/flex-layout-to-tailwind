@@ -1,7 +1,7 @@
+import { Cheerio, Element } from 'cheerio';
 import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, TAILWIND_LAYOUT_VALUES, TAILWIND_FLEX_VALUES } from './tailwind';
-import * as cheerio from 'cheerio';
 
-export function convertFxLayoutAlignToTailwind($element: cheerio.Cheerio<any>, value: string): void {
+export function convertFxLayoutAlignToTailwind($element: Cheerio<Element>, value: string): void {
   const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);
   const [flex, direction, dimension] = validateParent($element);
 
@@ -72,7 +72,7 @@ function validateCrossAxis(value: string): string {
   return value;
 }
 
-function validateParent($element: cheerio.Cheerio<any>): [string, string, string] {
+function validateParent($element: Cheerio<Element>): [string, string, string] {
   const parent = $element.parent().attr('class')?.split(' ') ?? [];
 
   const flex = parent.find(x => TAILWIND_FLEX_VALUES.includes(x)) ?? 'flex';

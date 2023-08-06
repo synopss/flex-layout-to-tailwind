@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { load } from 'cheerio';
+import { Cheerio, Element, load } from 'cheerio';
 import { convertFxLayoutToTailwind } from './layout';
 import { convertFxLayoutAlignToTailwind } from './layout-align';
 import { convertFxLayoutGapToTailwind } from './layout-gap';
@@ -17,7 +17,7 @@ export function convertTag(tag: string): string {
   const $ = load(tag, { xmlMode: true, decodeEntities: false });
 
   $('[fxLayout], [fxLayoutGap], [fxLayoutAlign]').each((_, element) => {
-    const $element = $(element);
+    const $element: Cheerio<Element> = $(element);
 
     const fxLayout = $element.attr('fxLayout');
     const fxLayoutGap = $element.attr('fxLayoutGap');

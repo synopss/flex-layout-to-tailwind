@@ -1,26 +1,13 @@
-import * as cheerio from 'cheerio';
+import { Cheerio, Element } from 'cheerio';
 import { validateFxLayoutValue } from './layout';
 import { TAILWIND_COLUMN_VALUES, TAILWIND_DEFAULT_SPACING_VALUES, TAILWIND_ROW_VALUES } from './tailwind';
 
 //TODO: handle grid
-export function convertFxLayoutGapToTailwind($element: cheerio.Cheerio<any>, fxLayout: string, value: string): void {
+export function convertFxLayoutGapToTailwind($element: Cheerio<Element>, fxLayout: string, value: string): void {
   const { direction, flex } = validateFxLayoutValue(fxLayout);
   const { gap, grid } = validateFxLayoutGapValue(value, direction);
 
-  $element.addClass(`${flex} ${gap} ${grid}`);
-
-  // let [layout] = (fxLayout || "column").split(" ");
-  //
-  // let spacing = 0;
-  // spacing = Math.ceil(parseFloat(value) / 4); // convert from px
-  //
-  // if (layout === "row") {
-  //   $element.addClass(`space-x-${spacing}`);
-  // } else {
-  //   $element.addClass(`space-y-${spacing}`);
-  // }
-
-  $element.removeAttr('fxLayoutGap');
+  $element.addClass(`${flex} ${gap} ${grid}`).removeAttr('fxLayoutGap');
 }
 
 function validateFxLayoutGapValue(value: string, direction: string) {
