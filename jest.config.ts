@@ -7,6 +7,8 @@ const jestConfig: Config.InitialOptions = {
   modulePaths: [compilerOptions.baseUrl],
   moduleDirectories: ['node_modules', '<rootDir>'],
   testEnvironment: 'node',
+  coveragePathIgnorePatterns: ['<rootDir>/dist/'],
+  watchPathIgnorePatterns: ['<rootDir>/dist/'],
 };
 
 export default jestConfig;
