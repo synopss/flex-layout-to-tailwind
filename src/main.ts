@@ -26,7 +26,7 @@ const handleArguments = async (options: ProgramOptions) => {
 };
 
 async function handlePrompt(): Promise<string> {
-  return await input({ message: 'Enter your project path to migrate' });
+  return input({ message: 'Enter your project path to migrate' });
 }
 
 async function main(): Promise<void> {
