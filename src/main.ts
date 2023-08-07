@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as process from 'process';
-import { migrate } from './migrate';
+import { migrate } from './migrator/migrate';
 
 interface ProgramOptions {
   input: string;

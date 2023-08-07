@@ -7,18 +7,26 @@ export const TAILWIND_ROW_VALUES = ['flex-row', 'flex-row-reverse'];
 export const TAILWIND_COLUMN_VALUES = ['flex-col', 'flex-col-reverse'];
 export const TAILWIND_FLEX_VALUES = ['flex', 'inline-flex'];
 
+export function isArbitraryValue(value: string): boolean {
+  return !!RegExp(/^\d+(\.\d+)?(px|em|rem|%|vw|vh|vmin|vmax)$/).exec(value);
+}
+
 export function toTailwindValue(value: string): string {
-  if (value.endsWith('%')) {
-    return `[${value}]`;
+  if (value === '' || !isArbitraryValue(value) || value === undefined) {
+    return '';
   }
 
-  const numberValue = +value.slice(0, -2);
-  const possibleTailwindNumber = numberValue / 4;
-  if (TAILWIND_DEFAULT_SPACING_VALUES.includes(possibleTailwindNumber)) {
-    return `${numberValue / 4}`;
+  if (value.endsWith('px')) {
+    const numberValue = parseInt(value);
+    const possibleTailwindNumber = numberValue / 4;
+
+    if (TAILWIND_DEFAULT_SPACING_VALUES.includes(possibleTailwindNumber)) {
+      return `${numberValue / 4}`;
+    }
+    if (numberValue === 1) {
+      return `px`;
+    }
   }
-  if (numberValue === 1) {
-    return `px`;
-  }
-  return `[${numberValue}px]`;
+
+  return `[${value}]`;
 }

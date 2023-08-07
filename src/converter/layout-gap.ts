@@ -1,5 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
-import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from '../util/tailwind';
+import { isArbitraryValue, TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from '../util/tailwind';
 import { validateFxLayoutValue } from './layout';
 
 export function convertFxLayoutGapToTailwind($element: Cheerio<Element>, fxLayout: string, value: string): void {
@@ -17,33 +17,25 @@ function validateFxLayoutGapValue(value: string, direction: string) {
 }
 
 function validateGap(value: string, direction: string, grid: string) {
-  const isPx = value.endsWith('px');
+  const tailwindValue = toTailwindValue(value);
+
   const isPercent = value.endsWith('%');
   let gap: string;
 
   if (grid) {
-    gap = validateGridGap(value);
-  } else if (isPx) {
-    gap = validatePxGap(value);
+    gap = `-mr-${tailwindValue} -mb-${tailwindValue}`;
   } else if (isPercent) {
-    gap = validatePercentGap(value, direction);
+    gap = validatePercentGap(tailwindValue, direction);
+  } else if (isArbitraryValue(value) || value.endsWith('px')) {
+    gap = `gap-${tailwindValue}`;
   } else {
     gap = '';
   }
 
   return {
     gap,
-    child: grid ? validateGridChild(value) : '',
+    child: grid ? `pr-${tailwindValue} pb-${tailwindValue}` : '',
   };
-}
-
-function validateGridGap(value: string): string {
-  const tailwindValue = toTailwindValue(value);
-  return `-mr-${tailwindValue} -mb-${tailwindValue}`;
-}
-
-function validatePxGap(value: string): string {
-  return `gap-${toTailwindValue(value)}`;
 }
 
 function validatePercentGap(value: string, direction: string): string {
@@ -55,11 +47,5 @@ function validatePercentGap(value: string, direction: string): string {
   } else {
     return '';
   }
-  return `space-${axis}-[${value}]`;
-}
-
-function validateGridChild(value: string): string {
-  const tailwindValue = toTailwindValue(value);
-
-  return `pr-${tailwindValue} pb-${tailwindValue}`;
+  return `space-${axis}-${value}`;
 }

@@ -14,6 +14,7 @@ describe('fxLayoutGap directive migration', () => {
 
   it('should convert fxLayoutGap with non-tailwind px values', () => {
     expect(convertTag(`<div fxLayoutGap="18px">`)).toEqual(`<div class="flex gap-[18px]">`);
+    expect(convertTag(`<div fxLayoutGap="10vh">`)).toEqual(`<div class="flex gap-[10vh]">`);
   });
 
   it('should convert fxLayoutGap with % values', () => {
@@ -28,6 +29,7 @@ describe('fxLayoutGap directive migration', () => {
     expect(convertTag(`<div fxLayoutGap="18px grid">`)).toEqual(`<div class="flex -mr-[18px] -mb-[18px]">`);
     expect(convertTag(`<div fxLayoutGap="20px grid">`)).toEqual(`<div class="flex -mr-5 -mb-5">`);
     expect(convertTag(`<div fxLayoutGap="10% grid">`)).toEqual(`<div class="flex -mr-[10%] -mb-[10%]">`);
+    expect(convertTag(`<div fxLayoutGap="10vh grid">`)).toEqual(`<div class="flex -mr-[10vh] -mb-[10vh]">`);
 
     // TODO: fix those tests, for some reason it handles weirdly ending tag -> </di>  instead of </div>
     // expect(convertTag(`<div fxLayoutGap="1px grid"><div>test</div></div>`)).toEqual(
