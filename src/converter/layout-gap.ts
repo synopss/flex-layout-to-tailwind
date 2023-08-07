@@ -1,6 +1,6 @@
 import { Cheerio, Element } from 'cheerio';
+import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from '../util/tailwind';
 import { validateFxLayoutValue } from './layout';
-import { TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from './tailwind';
 
 export function convertFxLayoutGapToTailwind($element: Cheerio<Element>, fxLayout: string, value: string): void {
   const { direction, flex } = validateFxLayoutValue(fxLayout);

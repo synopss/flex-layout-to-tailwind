@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 import process from 'process';
-import { convertFlexLayoutToTailwind } from './functions';
+import { convertFlexLayoutToTailwind } from '../converter/functions';
 
 export async function migrate(inputPath: string): Promise<void> {
   let stat: fs.Stats;
