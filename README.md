@@ -73,11 +73,11 @@ This following tables show all attributes covered by the migration from this CLI
 
 ## Contributing
 
-Want to report a bug or contribute some code? Amazing! Please read up on our guidelines for [contributing](contributing).
+Want to report a bug or contribute some code? Amazing! Please read up on our guidelines for [contributing](https://github.com/synopss/migrate-angular-flex-to-tailwind/blob/main/CONTRIBUTING.md).
 
 ## Code of Conduct
 
-Please read and follow our [Code of Conduct](code_of_conduct).
+Please read and follow our [Code of Conduct](https://github.com/synopss/migrate-angular-flex-to-tailwind/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
