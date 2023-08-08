@@ -1,12 +1,12 @@
-import * as fs from 'fs';
 import { Cheerio, Element, load } from 'cheerio';
-import { convertFxFlexToTailwind } from './flex';
-import { convertFxFlexAlignToTailwind } from './flex-align';
-import { convertFxFlexFillToTailwind } from './flex-fill';
-import { convertFxFlexOrderToTailwind } from './flex-order';
-import { convertFxLayoutToTailwind } from './layout';
-import { convertFxLayoutAlignToTailwind } from './layout-align';
-import { convertFxLayoutGapToTailwind } from './layout-gap';
+import * as fs from 'fs';
+import { convertFxFlexAlignToTailwind } from './flex/flex-align/flex-align';
+import { convertFxFlexFillToTailwind } from './flex/flex-fill/flex-fill';
+import { convertFxFlexOrderToTailwind } from './flex/flex-order/flex-order';
+import { convertFxFlexToTailwind } from './flex/flex/flex';
+import { convertFxLayoutAlignToTailwind } from './flex/layout-align/layout-align';
+import { convertFxLayoutGapToTailwind } from './flex/layout-gap/layout-gap';
+import { convertFxLayoutToTailwind } from './flex/layout/layout';
 
 const fxAttributes = ['fxFill', 'fxLayout', 'fxLayoutAlign', 'fxGap', 'fxFlex'];
 

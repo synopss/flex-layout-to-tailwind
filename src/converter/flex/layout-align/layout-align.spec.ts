@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxLayoutAlign directive migration', () => {
   it('should convert fxLayoutAlign default value', () => {

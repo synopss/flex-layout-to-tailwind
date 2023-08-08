@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxFlexAlign directive migration', () => {
   it('should convert fxFlexAlign default values', () => {

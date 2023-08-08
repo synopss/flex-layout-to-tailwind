@@ -1,5 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
-import { toTailwindValue } from '../util/tailwind';
+import { toTailwindValue } from '../../../util/tailwind';
 
 export function convertFxFlexToTailwind(
   $element: Cheerio<Element>,

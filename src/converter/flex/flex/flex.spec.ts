@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxFlex directive migration', () => {
   it('should convert fxFlex default value', () => {

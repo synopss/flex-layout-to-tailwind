@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxFlexOrder directive migration', () => {
   it('should convert fxFlexOrder', () => {

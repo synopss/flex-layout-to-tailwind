@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxLayoutGap directive migration', () => {
   it('should convert fxLayoutGap default value', () => {

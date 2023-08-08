@@ -4,7 +4,7 @@ import {
   TAILWIND_FLEX_VALUES,
   TAILWIND_LAYOUT_VALUES,
   TAILWIND_ROW_VALUES,
-} from '../util/tailwind';
+} from '../../../util/tailwind';
 
 export function convertFxLayoutAlignToTailwind($element: Cheerio<Element>, value: string): void {
   const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);

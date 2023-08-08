@@ -1,4 +1,4 @@
-import { convertTag } from './functions';
+import { convertTag } from '../../converter';
 
 describe('fxFlexFill & fxFill directives migration', () => {
   it('should convert fxFlexFill & fxFill', () => {
