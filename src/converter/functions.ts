@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import { Cheerio, Element, load } from 'cheerio';
 import { convertFxFlexToTailwind } from './flex';
 import { convertFxFlexFillToTailwind } from './flex-fill';
+import { convertFxFlexOrderToTailwind } from './flex-order';
 import { convertFxLayoutToTailwind } from './layout';
 import { convertFxLayoutAlignToTailwind } from './layout-align';
 import { convertFxLayoutGapToTailwind } from './layout-gap';
@@ -52,6 +53,13 @@ export function convertTag(tag: string): string {
   $('[fxFill], [fxFlexFill]').each((_, element) => {
     const $element: Cheerio<Element> = $(element);
     convertFxFlexFillToTailwind($element);
+  });
+
+  $('[fxFlexOrder]').each((_n, element) => {
+    const $element: Cheerio<Element> = $(element);
+    const fxFlexOrder = $element.attr('fxFlexOrder');
+
+    convertFxFlexOrderToTailwind($element, fxFlexOrder ?? '');
   });
 
   let newTag = $.html();

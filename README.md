@@ -52,7 +52,7 @@ This following tables show all attributes covered by the migration from this CLI
 | Flex-Layout Attribute    | Static API         | Responsive API |
 |--------------------------|--------------------|----------------|
 | fxFlex, fxGrow, fxShrink | :white_check_mark: | :x:            |
-| fxFlexOrder              | :x:                | :x:            |
+| fxFlexOrder              | :white_check_mark: | :x:            |
 | fxFlexOffset             | :x:                | :x:            |
 | fxFlexAlign              | :x:                | :x:            |
 | fxFlexFill, fxFill       | :white_check_mark: | No API         |
