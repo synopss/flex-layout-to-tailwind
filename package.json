@@ -1,10 +1,10 @@
 {
-  "name": "migrate-angular-flex-to-tailwind",
-  "version": "1.0.2",
-  "description": "CLI that migrates @angular/flex to tailwindcss",
-  "main": "./dist/index.js",
+  "name": "flex-layout-to-tailwind",
+  "version": "0.0.1",
+  "description": "CLI that migrates @angular/flex-layout to tailwindcss",
+  "main": "./dist/main.js",
   "bin": {
-    "maftt": "./dist/index.js"
+    "maftt": "./dist/main.js"
   },
   "scripts": {
     "build": "tsc",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smallstack/migrate-angular-flex-to-tailwind.git"
+    "url": "git+https://github.com/synopss/flex-layout-to-tailwind.git"
   },
   "keywords": [
     "angular",
@@ -32,9 +32,9 @@
   "author": "smallstack GmbH",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smallstack/migrate-angular-flex-to-tailwind/issues"
+    "url": "https://github.com/synopss/flex-layout-to-tailwind/issues"
   },
-  "homepage": "https://github.com/smallstack/migrate-angular-flex-to-tailwind#readme",
+  "homepage": "https://github.com/synopss/flex-layout-to-tailwind#readme",
   "dependencies": {
     "@inquirer/prompts": "^3.0.2",
     "chalk": "^4.1.2",

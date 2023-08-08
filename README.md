@@ -1,4 +1,4 @@
-# MAFTT (migrate angular flex to tailwind)
+# FLTT (Flex-Layout to Tailwind)
 
 This CLI helps you to migrate projects from the deprecated Angular Flex-Layout library to tailwindcss utility classes.
 This package has for goal to cover all cases seen in the Angular Flex-Layout library.
@@ -9,7 +9,7 @@ This package has for goal to cover all cases seen in the Angular Flex-Layout lib
 
 Install the package globally using npm:
 ```bash
-npm i -g migrate-angular-flex-to-tailwind
+npm i -g flex-layout-to-tailwind
 ```
 
 ## Usage
