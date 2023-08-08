@@ -49,17 +49,17 @@ This following tables show all attributes covered by the migration from this CLI
 
 ### API for DOM elements
 
-| Flex-Layout Attribute | Static API      | Responsive API |
-|-----------------------|-----------------|----------------|
-| fxFlex                | :construction:  | :x:            |
-| fxFlexOrder           | :x:             | :x:            |
-| fxFlexOffset          | :x:             | :x:            |
-| fxFlexAlign           | :x:             | :x:            |
-| fxFlexFill, fxFill    | :construction:  | :x:            |
-| gdArea                | :x:             | :x:            |
-| gdColumn              | :x:             | :x:            |
-| gdRow                 | :x:             | :x:            |
-| gdGridAlign           | :x:             | :x:            |
+| Flex-Layout Attribute    | Static API         | Responsive API |
+|--------------------------|--------------------|----------------|
+| fxFlex, fxGrow, fxShrink | :white_check_mark: | :x:            |
+| fxFlexOrder              | :x:                | :x:            |
+| fxFlexOffset             | :x:                | :x:            |
+| fxFlexAlign              | :x:                | :x:            |
+| fxFlexFill, fxFill       | :construction:     | :x:            |
+| gdArea                   | :x:                | :x:            |
+| gdColumn                 | :x:                | :x:            |
+| gdRow                    | :x:                | :x:            |
+| gdGridAlign              | :x:                | :x:            |
 
 ### API for any element
 

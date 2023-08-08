@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { Cheerio, Element, load } from 'cheerio';
+import { convertFxFlexToTailwind } from './flex';
 import { convertFxLayoutToTailwind } from './layout';
 import { convertFxLayoutAlignToTailwind } from './layout-align';
 import { convertFxLayoutGapToTailwind } from './layout-gap';
@@ -23,7 +24,7 @@ export function convertTag(tag: string): string {
     const fxLayoutGap = $element.attr('fxLayoutGap');
     const fxLayoutAlign = $element.attr('fxLayoutAlign');
 
-    if (fxLayoutAlign != undefined) {
+    if (fxLayoutAlign !== undefined) {
       convertFxLayoutAlignToTailwind($element, fxLayoutAlign);
     }
 
@@ -31,41 +32,20 @@ export function convertTag(tag: string): string {
       convertFxLayoutToTailwind($element, fxLayout);
     }
 
-    if (fxLayoutGap != undefined) {
+    if (fxLayoutGap !== undefined) {
       convertFxLayoutGapToTailwind($element, fxLayout ?? '', fxLayoutGap);
     }
   });
 
-  $('[fxFlex]').each((_, elem) => {
-    const fxFlex = $(elem).attr('fxFlex');
+  $('[fxFlex], [fxGrow], [fxShrink]').each((_, element) => {
+    const $element: Cheerio<Element> = $(element);
+    const fxFlex = $element.attr('fxFlex');
+    const fxGrow = $element.attr('fxGrow');
+    const fxShrink = $element.attr('fxShrink');
 
-    if (!fxFlex) {
-      $(elem).addClass(`flex-1`).removeAttr('fxFlex');
-      return;
+    if (fxFlex !== undefined) {
+      convertFxFlexToTailwind($element, fxFlex, fxGrow ?? '', fxShrink ?? '');
     }
-
-    if (fxFlex === '*') {
-      $(elem).addClass(`flex-auto`).removeAttr('fxFlex');
-      return;
-    }
-
-    let widthClass = '';
-    switch (parseInt(fxFlex)) {
-      case 33:
-        widthClass = '1/3';
-        break;
-      case 66:
-        widthClass = '2/3';
-        break;
-      case 100:
-        widthClass = 'full';
-        break;
-      default:
-        widthClass = percentageToFraction(fxFlex);
-        break;
-    }
-
-    $(elem).addClass(`basis-${widthClass}`).removeAttr('fxFlex');
   });
 
   $('[fxFill]').each((_, elem) => {
@@ -80,22 +60,6 @@ export function convertTag(tag: string): string {
   } else {
     return newTag.slice(0, -2) + '>';
   }
-}
-
-export function gcd(a: number, b: number): number {
-  if (!b) {
-    return a;
-  }
-  return gcd(b, a % b);
-}
-
-export function percentageToFraction(percentage: string): string {
-  const denominator = 100;
-  const numerator = parseInt(percentage);
-  const gcdValue = gcd(numerator, denominator);
-  const simplifiedNumerator = numerator / gcdValue;
-  const simplifiedDenominator = denominator / gcdValue;
-  return `${simplifiedNumerator}/${simplifiedDenominator}`;
 }
 
 export function extractHtmlTags(html: string): string[] {
