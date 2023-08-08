@@ -55,7 +55,7 @@ This following tables show all attributes covered by the migration from this CLI
 | fxFlexOrder              | :x:                | :x:            |
 | fxFlexOffset             | :x:                | :x:            |
 | fxFlexAlign              | :x:                | :x:            |
-| fxFlexFill, fxFill       | :construction:     | :x:            |
+| fxFlexFill, fxFill       | :white_check_mark: | No API         |
 | gdArea                   | :x:                | :x:            |
 | gdColumn                 | :x:                | :x:            |
 | gdRow                    | :x:                | :x:            |

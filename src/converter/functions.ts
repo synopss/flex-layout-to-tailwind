@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { Cheerio, Element, load } from 'cheerio';
 import { convertFxFlexToTailwind } from './flex';
+import { convertFxFlexFillToTailwind } from './flex-fill';
 import { convertFxLayoutToTailwind } from './layout';
 import { convertFxLayoutAlignToTailwind } from './layout-align';
 import { convertFxLayoutGapToTailwind } from './layout-gap';
@@ -48,8 +49,9 @@ export function convertTag(tag: string): string {
     }
   });
 
-  $('[fxFill]').each((_, elem) => {
-    $(elem).addClass(`h-full w-full min-h-full min-w-full`).removeAttr('fxFill');
+  $('[fxFill], [fxFlexFill]').each((_, element) => {
+    const $element: Cheerio<Element> = $(element);
+    convertFxFlexFillToTailwind($element);
   });
 
   let newTag = $.html();
