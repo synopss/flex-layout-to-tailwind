@@ -4,7 +4,7 @@
   "description": "CLI that migrates @angular/flex-layout to tailwindcss",
   "main": "./dist/main.js",
   "bin": {
-    "maftt": "./dist/main.js"
+    "fltt": "./dist/main.js"
   },
   "scripts": {
     "build": "tsc",
@@ -29,7 +29,7 @@
     "migrate",
     "migration"
   ],
-  "author": "smallstack GmbH",
+  "author": "synopss",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/synopss/flex-layout-to-tailwind/issues"

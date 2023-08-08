@@ -16,12 +16,12 @@ npm i -g flex-layout-to-tailwind
 
 You can use the CLI using:
 ```bash
-maftt
+fltt
 ```
 
 Or you can directly provide the input of your project as an option:
 ```bash
-maftt --input ./path/to/your/project
+fltt --input ./path/to/your/project
 ```
 
 ## Status
