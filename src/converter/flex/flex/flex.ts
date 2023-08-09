@@ -17,7 +17,7 @@ export function convertFxFlexToTailwind(
     return;
   }
 
-  if (value === '1 1 auto' || value === 'auto') {
+  if (value === '1 1 auto' || (value === 'auto' && !(fxGrow || fxShrink))) {
     updateElement($element, 'flex-auto');
     return;
   }
@@ -101,6 +101,9 @@ function validateShrinkValue(value: string): string {
 function validateBasisValue(value: string): string {
   if (!value) {
     return 'basis-0';
+  }
+  if (value === 'auto') {
+    return 'basis-auto';
   }
   if (parseInt(value) === 100) {
     return 'basis-full';

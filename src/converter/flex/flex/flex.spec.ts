@@ -39,6 +39,9 @@ describe('fxFlex directive migration', () => {
   it('should convert fxFlex="<grow>" fxShrink="<shrink>" fxGrow="<basis>"', () => {
     expect(convertTag(`<div fxFlex fxShrink="0" fxGrow="2">`)).toEqual(`<div class="grow-[2] shrink-0 basis-0">`);
     expect(convertTag(`<div fxFlex fxShrink="2" fxGrow="1">`)).toEqual(`<div class="grow shrink-[2] basis-0">`);
+    expect(convertTag(`<div fxFlex="auto" fxShrink="2" fxGrow="1">`)).toEqual(
+      `<div class="grow shrink-[2] basis-auto">`,
+    );
     expect(convertTag(`<div fxFlex="1 1 0%" fxShrink="2" fxGrow="1">`)).toEqual(`<div class="flex-1">`);
     expect(convertTag(`<div fxFlex="2 2 50%" fxShrink="1" fxGrow="1">`)).toEqual(
       `<div class="grow-[2] shrink-[2] basis-1/2">`,
