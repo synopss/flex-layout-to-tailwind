@@ -1,0 +1,34 @@
+import fs from 'fs';
+import path from 'path';
+import { shouldIgnore } from '../util/gitignore';
+import { migrateFile } from './file-migrator';
+
+let baseFolder: string;
+
+export function migrateFolder(folderPath: string, isRecursive: boolean = false): void {
+  if (!isRecursive) {
+    baseFolder = folderPath;
+  }
+  fs.readdirSync(folderPath).forEach(itemPath => {
+    const currentPath = path.join(folderPath, itemPath);
+    const stats = fs.statSync(currentPath);
+    console.debug(`Processing ${itemPath}`);
+
+    if (shouldIgnore(baseFolder, currentPath)) {
+      console.debug(`Ignoring ${currentPath}`);
+      return;
+    }
+
+    if (stats.isFile()) {
+      if (isSupportedFileExtension(path.extname(currentPath))) {
+        migrateFile(currentPath);
+      }
+    } else if (stats.isDirectory()) {
+      migrateFolder(currentPath, true);
+    }
+  });
+}
+
+function isSupportedFileExtension(fileExtension: string): boolean {
+  return fileExtension === '.html' || fileExtension === '.htm';
+}
