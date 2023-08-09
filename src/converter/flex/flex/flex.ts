@@ -85,6 +85,9 @@ function validateGrowValue(value: string): string {
 }
 
 function validateShrinkValue(value: string): string {
+  if (/\d$/.test(value)) {
+    value += '%';
+  }
   if (!value) {
     return '';
   }
@@ -99,6 +102,9 @@ function validateShrinkValue(value: string): string {
 }
 
 function validateBasisValue(value: string): string {
+  if (/\d$/.test(value)) {
+    value += '%';
+  }
   if (!value) {
     return 'basis-0';
   }

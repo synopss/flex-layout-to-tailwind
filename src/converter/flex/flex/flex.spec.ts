@@ -7,6 +7,7 @@ describe('fxFlex directive migration', () => {
   });
 
   it('should convert fxFlex with only a basis value', () => {
+    expect(convertTag(`<div fxFlex="50">`)).toEqual(`<div class="basis-1/2">`);
     expect(convertTag(`<div fxFlex="50%">`)).toEqual(`<div class="basis-1/2">`);
     expect(convertTag(`<div fxFlex="33.3%">`)).toEqual(`<div class="basis-1/3">`);
     expect(convertTag(`<div fxFlex="33%">`)).toEqual(`<div class="basis-[33%]">`);
