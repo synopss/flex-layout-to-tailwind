@@ -84,9 +84,9 @@ function validateParent($element: Cheerio<Element>): [string, string, string] {
   const direction = parent.find(x => TAILWIND_LAYOUT_VALUES.includes(x)) ?? '';
   let dimension = '';
 
-  if (parent.find(x => TAILWIND_ROW_VALUES.includes(x))) {
+  if (parent.some(x => TAILWIND_ROW_VALUES.includes(x))) {
     dimension = 'h-full';
-  } else if (parent.find(x => TAILWIND_COLUMN_VALUES.includes(x))) {
+  } else if (parent.some(x => TAILWIND_COLUMN_VALUES.includes(x))) {
     dimension = 'w-full';
   }
 

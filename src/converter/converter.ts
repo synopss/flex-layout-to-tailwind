@@ -2,6 +2,7 @@ import { Cheerio, Element, load } from 'cheerio';
 import * as fs from 'fs';
 import { convertFxFlexAlignToTailwind } from './flex/flex-align/flex-align';
 import { convertFxFlexFillToTailwind } from './flex/flex-fill/flex-fill';
+import convertFxFlexOffsetToTailwind from './flex/flex-offset/flex-offset';
 import { convertFxFlexOrderToTailwind } from './flex/flex-order/flex-order';
 import { convertFxFlexToTailwind } from './flex/flex/flex';
 import { convertFxLayoutAlignToTailwind } from './flex/layout-align/layout-align';
@@ -12,6 +13,10 @@ const fxAttributes = ['fxFill', 'fxLayout', 'fxLayoutAlign', 'fxGap', 'fxFlex'];
 
 export function convertFlexLayoutToTailwind(filePath: string) {
   const html = fs.readFileSync(filePath, 'utf-8');
+  return convertHtml(html);
+}
+
+export function convertHtml(html: string) {
   return extractHtmlTags(html).reduce((html, tag) => html.replace(tag, convertTag(tag)), html);
 }
 
@@ -68,6 +73,13 @@ export function convertTag(tag: string): string {
     const fxFlexAlign = $element.attr('fxFlexAlign');
 
     convertFxFlexAlignToTailwind($element, fxFlexAlign ?? '');
+  });
+
+  $('[fxFlexOffset]').each((_n, element) => {
+    const $element: Cheerio<Element> = $(element);
+    const fxFlexOffset = $element.attr('fxFlexOffset');
+
+    convertFxFlexOffsetToTailwind($element, fxFlexOffset ?? '');
   });
 
   let newTag = $.html();

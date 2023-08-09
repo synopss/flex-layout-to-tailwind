@@ -53,7 +53,7 @@ This following tables show all attributes covered by the migration from this CLI
 |--------------------------|--------------------|----------------|
 | fxFlex, fxGrow, fxShrink | :white_check_mark: | :x:            |
 | fxFlexOrder              | :white_check_mark: | :x:            |
-| fxFlexOffset             | :x:                | :x:            |
+| fxFlexOffset             | :white_check_mark: | :x:            |
 | fxFlexAlign              | :white_check_mark: | :x:            |
 | fxFlexFill, fxFill       | :white_check_mark: | No API         |
 | gdArea                   | :x:                | :x:            |

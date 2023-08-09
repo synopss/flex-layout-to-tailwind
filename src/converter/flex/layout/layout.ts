@@ -13,7 +13,7 @@ export function validateFxLayoutValue(value: string) {
   value = value?.toLowerCase() ?? '';
   let [direction, wrap, inline] = value.split(' ');
 
-  if (!LAYOUT_VALUES.find(x => x === direction)) {
+  if (!LAYOUT_VALUES.some(x => x === direction)) {
     direction = LAYOUT_VALUES[0];
   }
 
