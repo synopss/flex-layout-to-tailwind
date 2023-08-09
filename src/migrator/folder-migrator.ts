@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { shouldIgnore } from '../util/gitignore';
-import { migrateFile } from './file-migrator';
+import { isSupportedFileExtension, migrateFile } from './file-migrator';
 
 let baseFolder: string;
 
@@ -27,8 +27,4 @@ export function migrateFolder(folderPath: string, isRecursive: boolean = false):
       migrateFolder(currentPath, true);
     }
   });
-}
-
-function isSupportedFileExtension(fileExtension: string): boolean {
-  return fileExtension === '.html' || fileExtension === '.htm';
 }
