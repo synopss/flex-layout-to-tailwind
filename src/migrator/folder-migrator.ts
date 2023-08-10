@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { shouldIgnore } from '../util/gitignore';
+import { logger } from '../util/logger';
 import { isSupportedFileExtension, migrateFile } from './file-migrator';
 
 let baseFolder: string;
@@ -15,10 +16,10 @@ export async function migrateFolder(folderPath: string, isRecursive: boolean = f
   filesAndDirectories.forEach(itemPath => {
     const currentPath = path.join(folderPath, itemPath);
     const stats = fs.statSync(currentPath);
-    console.debug(`Processing ${itemPath}`);
+    logger.debug(`Processing ${itemPath}`);
 
     if (shouldIgnore(baseFolder, currentPath)) {
-      console.debug(`Ignoring ${currentPath}`);
+      logger.debug(`Ignoring ${currentPath}`);
       return;
     }
 

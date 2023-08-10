@@ -3,6 +3,7 @@ import fs from 'fs';
 import { convertFile } from '../converter/converter';
 import { loadHtml } from '../util/cheerio';
 import { findElementsWithFxAttributes } from '../util/flex-layout';
+import { logger } from '../util/logger';
 
 export function isSupportedFileExtension(fileExtension: string): boolean {
   return fileExtension === '.html' || fileExtension === '.htm';
@@ -13,10 +14,10 @@ export async function migrateFile(filePath: string): Promise<void> {
   const $ = loadHtml(html);
 
   const elements = findElementsWithFxAttributes($);
-  console.debug(`Found ${elements.length} elements`);
+  logger.debug(`Found ${elements.length} elements`);
 
   if (!elements.length) {
-    console.debug('No elements found. Skipping file');
+    logger.debug('No elements found. Skipping file');
     return;
   }
 
