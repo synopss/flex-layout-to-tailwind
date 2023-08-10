@@ -1,58 +1,109 @@
-import { convertTag } from '../../converter';
+import { expectValidConversion } from '../../../util/test-util';
 
 describe('fxLayout directive migration', () => {
-  it('should convert fxLayout default value', () => {
-    expect(convertTag(`<div fxLayout>`)).toEqual(`<div class="flex flex-row">`);
-    expect(convertTag(`<div fxLayout="">`)).toEqual(`<div class="flex flex-row">`);
+  it('should convert fxLayout with no value', () => {
+    expectValidConversion(`<div fxLayout></div>`, 'flex flex-row');
+  });
+
+  it('should convert fxLayout with empty value', () => {
+    expectValidConversion(`<div fxLayout=""></div>`, 'flex flex-row');
   });
 
   it('should convert fxLayout="row"', () => {
-    expect(convertTag(`<div fxLayout="row">`)).toEqual(`<div class="flex flex-row">`);
-    expect(convertTag(`<div fxLayout="row inline">`)).toEqual(`<div class="inline-flex flex-row">`);
-    expect(convertTag(`<div fxLayout="row wrap inline">`)).toEqual(`<div class="inline-flex flex-row flex-wrap">`);
-    expect(convertTag(`<div fxLayout="row wrap-reverse inline">`)).toEqual(
-      `<div class="inline-flex flex-row flex-wrap-reverse">`,
-    );
-    expect(convertTag(`<div fxLayout="row nowrap inline">`)).toEqual(`<div class="inline-flex flex-row flex-nowrap">`);
+    expectValidConversion(`<div fxLayout="row"></div>`, 'flex flex-row');
+  });
+
+  it('should convert fxLayout="row inline"', () => {
+    expectValidConversion(`<div fxLayout="row inline"></div>`, 'inline-flex flex-row');
+  });
+
+  it('should convert fxLayout="row wrap inline"', () => {
+    expectValidConversion(`<div fxLayout="row wrap inline"></div>`, 'inline-flex flex-row flex-wrap');
+  });
+
+  it('should convert fxLayout="row wrap-reverse inline"', () => {
+    expectValidConversion(`<div fxLayout="row wrap-reverse inline"></div>`, 'inline-flex flex-row flex-wrap-reverse');
+  });
+
+  it('should convert fxLayout="row nowrap inline"', () => {
+    expectValidConversion(`<div fxLayout="row nowrap inline"></div>`, 'inline-flex flex-row flex-nowrap');
   });
 
   it('should convert fxLayout="row-reverse"', () => {
-    expect(convertTag(`<div fxLayout="row-reverse">`)).toEqual(`<div class="flex flex-row-reverse">`);
-    expect(convertTag(`<div fxLayout="row-reverse inline">`)).toEqual(`<div class="inline-flex flex-row-reverse">`);
-    expect(convertTag(`<div fxLayout="row-reverse wrap inline">`)).toEqual(
-      `<div class="inline-flex flex-row-reverse flex-wrap">`,
+    expectValidConversion(`<div fxLayout="row-reverse"></div>`, 'flex flex-row-reverse');
+  });
+
+  it('should convert fxLayout="row-reverse inline"', () => {
+    expectValidConversion(`<div fxLayout="row-reverse inline"></div>`, 'inline-flex flex-row-reverse');
+  });
+
+  it('should convert fxLayout="row-reverse wrap inline"', () => {
+    expectValidConversion(`<div fxLayout="row-reverse wrap inline"></div>`, 'inline-flex flex-row-reverse flex-wrap');
+  });
+
+  it('should convert fxLayout="row-reverse wrap-reverse inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="row-reverse wrap-reverse inline"></div>`,
+      'inline-flex flex-row-reverse flex-wrap-reverse',
     );
-    expect(convertTag(`<div fxLayout="row-reverse wrap-reverse inline">`)).toEqual(
-      `<div class="inline-flex flex-row-reverse flex-wrap-reverse">`,
-    );
-    expect(convertTag(`<div fxLayout="row-reverse nowrap inline">`)).toEqual(
-      `<div class="inline-flex flex-row-reverse flex-nowrap">`,
+  });
+
+  it('should convert fxLayout="row-reverse nowrap inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="row-reverse nowrap inline"></div>`,
+      'inline-flex flex-row-reverse flex-nowrap',
     );
   });
 
   it('should convert fxLayout="column"', () => {
-    expect(convertTag(`<div fxLayout="column">`)).toEqual(`<div class="flex flex-col">`);
-    expect(convertTag(`<div fxLayout="column inline">`)).toEqual(`<div class="inline-flex flex-col">`);
-    expect(convertTag(`<div fxLayout="column wrap inline">`)).toEqual(`<div class="inline-flex flex-col flex-wrap">`);
-    expect(convertTag(`<div fxLayout="column wrap-reverse inline">`)).toEqual(
-      `<div class="inline-flex flex-col flex-wrap-reverse">`,
-    );
-    expect(convertTag(`<div fxLayout="column nowrap inline">`)).toEqual(
-      `<div class="inline-flex flex-col flex-nowrap">`,
+    expectValidConversion(`<div fxLayout="column"></div>`, 'flex flex-col');
+  });
+
+  it('should convert fxLayout="column inline"', () => {
+    expectValidConversion(`<div fxLayout="column inline"></div>`, 'inline-flex flex-col');
+  });
+
+  it('should convert fxLayout="column wrap inline"', () => {
+    expectValidConversion(`<div fxLayout="column wrap inline"></div>`, 'inline-flex flex-col flex-wrap');
+  });
+
+  it('should convert fxLayout="column wrap-reverse inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="column wrap-reverse inline"></div>`,
+      'inline-flex flex-col flex-wrap-reverse',
     );
   });
 
+  it('should convert fxLayout="column nowrap inline"', () => {
+    expectValidConversion(`<div fxLayout="column nowrap inline"></div>`, 'inline-flex flex-col flex-nowrap');
+  });
+
   it('should convert fxLayout="column-reverse"', () => {
-    expect(convertTag(`<div fxLayout="column-reverse">`)).toEqual(`<div class="flex flex-col-reverse">`);
-    expect(convertTag(`<div fxLayout="column-reverse inline">`)).toEqual(`<div class="inline-flex flex-col-reverse">`);
-    expect(convertTag(`<div fxLayout="column-reverse wrap inline">`)).toEqual(
-      `<div class="inline-flex flex-col-reverse flex-wrap">`,
+    expectValidConversion(`<div fxLayout="column-reverse"></div>`, 'flex flex-col-reverse');
+  });
+
+  it('should convert fxLayout="column-reverse inline"', () => {
+    expectValidConversion(`<div fxLayout="column-reverse inline"></div>`, 'inline-flex flex-col-reverse');
+  });
+
+  it('should convert fxLayout="column-reverse wrap inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="column-reverse wrap inline"></div>`,
+      'inline-flex flex-col-reverse flex-wrap',
     );
-    expect(convertTag(`<div fxLayout="column-reverse wrap-reverse inline">`)).toEqual(
-      `<div class="inline-flex flex-col-reverse flex-wrap-reverse">`,
+  });
+
+  it('should convert fxLayout="column-reverse wrap-reverse inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="column-reverse wrap-reverse inline"></div>`,
+      'inline-flex flex-col-reverse flex-wrap-reverse',
     );
-    expect(convertTag(`<div fxLayout="column-reverse nowrap inline">`)).toEqual(
-      `<div class="inline-flex flex-col-reverse flex-nowrap">`,
+  });
+
+  it('should convert fxLayout="column-reverse nowrap inline"', () => {
+    expectValidConversion(
+      `<div fxLayout="column-reverse nowrap inline"></div>`,
+      'inline-flex flex-col-reverse flex-nowrap',
     );
   });
 });

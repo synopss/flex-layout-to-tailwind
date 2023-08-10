@@ -5,6 +5,7 @@ import { Command } from 'commander';
 import * as fs from 'fs';
 import * as process from 'process';
 import { migrate } from './migrator/migrator';
+import { ATTRIBUTES_HANDLED } from './util/flex-layout';
 
 interface ProgramOptions {
   input: string;
@@ -58,5 +59,6 @@ console.log(chalk.yellow('\nWelcome to the Angular Flex Layout Migrator!\n'));
 console.log(
   chalk.whiteBright('This tool will help you migrate your Angular Flex-Layout attributes to tailwind classes\n'),
 );
+console.log(chalk.blue(`${ATTRIBUTES_HANDLED} are all attributes that will be migrated\n`));
 
 main();

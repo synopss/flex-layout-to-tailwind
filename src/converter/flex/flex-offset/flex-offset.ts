@@ -1,7 +1,7 @@
 import { Cheerio, Element } from 'cheerio';
 import { TAILWIND_COLUMN_VALUES, toTailwindValue } from '../../../util/tailwind';
 
-export default function convertFxFlexOffsetToTailwind($element: Cheerio<Element>, value: string): void {
+export function convertFxFlexOffsetToTailwind($element: Cheerio<Element>, value: string): void {
   const classValue = validateFxFlexOffsetValue(value);
   const marginPrefix = validateParent($element);
 

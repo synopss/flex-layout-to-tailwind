@@ -1,20 +1,31 @@
-import chalk from 'chalk';
+import { CheerioAPI } from 'cheerio';
 import fs from 'fs';
-import path from 'path';
-import process from 'process';
-import { convertFlexLayoutToTailwind } from '../converter/converter';
-
-export function migrateFile(filePath: string): void {
-  if (!isSupportedFileExtension(path.extname(filePath))) {
-    console.error(chalk.red(`Error: Unsupported file type: ${filePath}`));
-    process.exit(1);
-  }
-
-  const convertedData = convertFlexLayoutToTailwind(filePath);
-  fs.writeFileSync(filePath, convertedData, 'utf-8');
-  console.info(`Info: File converted successfully: ${filePath}`);
-}
+import { convertFile } from '../converter/converter';
+import { loadHtml } from '../util/cheerio';
+import { findElementsWithFxAttributes } from '../util/flex-layout';
 
 export function isSupportedFileExtension(fileExtension: string): boolean {
   return fileExtension === '.html' || fileExtension === '.htm';
+}
+
+export async function migrateFile(filePath: string): Promise<void> {
+  const html = fs.readFileSync(filePath, 'utf-8');
+  const $ = loadHtml(html);
+
+  const elements = findElementsWithFxAttributes($);
+  console.debug(`Found ${elements.length} elements`);
+
+  if (!elements.length) {
+    console.debug('No elements found. Skipping file');
+    return;
+  }
+
+  convertFile($);
+  await writeFile($, filePath);
+}
+
+async function writeFile($: CheerioAPI, filePath: string): Promise<void> {
+  const migratedHtml = $.html({ xmlMode: false });
+
+  await fs.promises.writeFile(filePath, migratedHtml);
 }

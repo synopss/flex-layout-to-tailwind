@@ -5,11 +5,14 @@ import { isSupportedFileExtension, migrateFile } from './file-migrator';
 
 let baseFolder: string;
 
-export function migrateFolder(folderPath: string, isRecursive: boolean = false): void {
+export async function migrateFolder(folderPath: string, isRecursive: boolean = false): Promise<void> {
   if (!isRecursive) {
     baseFolder = folderPath;
   }
-  fs.readdirSync(folderPath).forEach(itemPath => {
+
+  const filesAndDirectories = await fs.promises.readdir(folderPath);
+
+  filesAndDirectories.forEach(itemPath => {
     const currentPath = path.join(folderPath, itemPath);
     const stats = fs.statSync(currentPath);
     console.debug(`Processing ${itemPath}`);

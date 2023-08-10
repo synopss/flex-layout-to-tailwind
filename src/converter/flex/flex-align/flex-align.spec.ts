@@ -1,17 +1,35 @@
-import { convertTag } from '../../converter';
+import { expectValidConversion } from '../../../util/test-util';
 
 describe('fxFlexAlign directive migration', () => {
-  it('should convert fxFlexAlign default values', () => {
-    expect(convertTag(`<div fxFlexAlign>`)).toEqual(`<div class="self-stretch">`);
-    expect(convertTag(`<div fxFlexAlign="">`)).toEqual(`<div class="self-stretch">`);
+  it('should convert fxFlexAlign with no value', () => {
+    expectValidConversion(`<div fxFlexAlign></div>`, 'self-stretch');
   });
 
-  it('should convert fxFlexAlign all values', () => {
-    expect(convertTag(`<div fxFlexAlign="start">`)).toEqual(`<div class="self-start">`);
-    expect(convertTag(`<div fxFlexAlign="center">`)).toEqual(`<div class="self-center">`);
-    expect(convertTag(`<div fxFlexAlign="end">`)).toEqual(`<div class="self-end">`);
-    expect(convertTag(`<div fxFlexAlign="baseline">`)).toEqual(`<div class="self-baseline">`);
-    expect(convertTag(`<div fxFlexAlign="stretch">`)).toEqual(`<div class="self-stretch">`);
-    expect(convertTag(`<div fxFlexAlign="auto">`)).toEqual(`<div class="self-auto">`);
+  it('should convert fxFlexAlign with empty value', () => {
+    expectValidConversion(`<div fxFlexAlign></div>`, 'self-stretch');
+  });
+
+  it('should convert fxFlexAlign="start"', () => {
+    expectValidConversion(`<div fxFlexAlign="start"></div>`, 'self-start');
+  });
+
+  it('should convert fxFlexAlign="center"', () => {
+    expectValidConversion(`<div fxFlexAlign="center"></div>`, 'self-center');
+  });
+
+  it('should convert fxFlexAlign="end"', () => {
+    expectValidConversion(`<div fxFlexAlign="end"></div>`, 'self-end');
+  });
+
+  it('should convert fxFlexAlign="baseline"', () => {
+    expectValidConversion(`<div fxFlexAlign="baseline"></div>`, 'self-baseline');
+  });
+
+  it('should convert fxFlexAlign="stretch"', () => {
+    expectValidConversion(`<div fxFlexAlign="stretch"></div>`, 'self-stretch');
+  });
+
+  it('should convert fxFlexAlign="auto"', () => {
+    expectValidConversion(`<div fxFlexAlign="auto"></div>`, 'self-auto');
   });
 });

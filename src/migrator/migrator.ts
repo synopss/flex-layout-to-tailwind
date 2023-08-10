@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import * as fs from 'fs';
 import { loadGitIgnore } from '../util/gitignore';
 import { migrateFile } from './file-migrator';
@@ -10,10 +9,8 @@ export async function migrate(inputPath: string): Promise<void> {
   await loadGitIgnore(inputPath);
 
   if (stat.isFile()) {
-    migrateFile(inputPath);
+    await migrateFile(inputPath);
   } else if (stat.isDirectory()) {
-    migrateFolder(inputPath);
+    await migrateFolder(inputPath);
   }
-
-  console.log(chalk.green('Migration done.'));
 }

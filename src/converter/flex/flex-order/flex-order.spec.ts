@@ -1,16 +1,39 @@
-import { convertTag } from '../../converter';
+import { expectValidConversion } from '../../../util/test-util';
 
 describe('fxFlexOrder directive migration', () => {
-  it('should convert fxFlexOrder', () => {
-    expect(convertTag(`<div fxFlexOrder>`)).toEqual(`<div class="order-none">`);
-    expect(convertTag(`<div fxFlexOrder="">`)).toEqual(`<div class="order-none">`);
-    expect(convertTag(`<div fxFlexOrder="0">`)).toEqual(`<div class="order-none">`);
-    expect(convertTag(`<div fxFlexOrder="1">`)).toEqual(`<div class="order-1">`);
-    expect(convertTag(`<div fxFlexOrder="12">`)).toEqual(`<div class="order-12">`);
-    expect(convertTag(`<div fxFlexOrder="13">`)).toEqual(`<div class="order-[13]">`);
-    expect(convertTag(`<div fxFlexOrder="-9999">`)).toEqual(`<div class="order-first">`);
-    expect(convertTag(`<div fxFlexOrder="9999">`)).toEqual(`<div class="order-last">`);
-    expect(convertTag(`<div fxFlexOrder="-12">`)).toEqual(`<div class="-order-12">`);
-    expect(convertTag(`<div fxFlexOrder="-13">`)).toEqual(`<div class="-order-[13]">`);
+  it('should convert fxFlexOrder with no value', () => {
+    expectValidConversion(`<div fxFlexOrder></div>`, 'order-none');
+  });
+
+  it('should convert fxFlexOrder with empty value', () => {
+    expectValidConversion(`<div fxFlexOrder=""></div>`, 'order-none');
+  });
+
+  it('should convert fxFlexOrder="0"', () => {
+    expectValidConversion(`<div fxFlexOrder="0"></div>`, 'order-none');
+  });
+
+  it('should convert fxFlexOrder with a valid tailwind value (1 -> 12)', () => {
+    expectValidConversion(`<div fxFlexOrder="12"></div>`, 'order-12');
+  });
+
+  it('should convert fxFlexOrder with a non-valid tailwind value (> 12)', () => {
+    expectValidConversion(`<div fxFlexOrder="13"></div>`, 'order-[13]');
+  });
+
+  it('should convert fxFlexOrder with a negative valid tailwind value (-1 -> -12)', () => {
+    expectValidConversion(`<div fxFlexOrder="-12"></div>`, '-order-12');
+  });
+
+  it('should convert fxFlexOrder with a negative non-valid tailwind value (< -12)', () => {
+    expectValidConversion(`<div fxFlexOrder="-13"></div>`, '-order-[13]');
+  });
+
+  it('should convert fxFlexOrder="9999"', () => {
+    expectValidConversion(`<div fxFlexOrder="9999"></div>`, 'order-last');
+  });
+
+  it('should convert fxFlexOrder="-9999"', () => {
+    expectValidConversion(`<div fxFlexOrder="-9999"></div>`, 'order-first');
   });
 });
