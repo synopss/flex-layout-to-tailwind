@@ -24,6 +24,11 @@ Or you can directly provide the input of your project as an option:
 fltt --input ./path/to/your/project
 ```
 
+You can also add debug option:
+```bash
+fltt --input ./path/to/your/project --debug
+```
+
 ## Status
 
 Flex-Layout has two APIs: a static and a responsive one. The first one is used to handle fixed values, the second one adds breakpoints to handle responsiveness.

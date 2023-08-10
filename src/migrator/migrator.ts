@@ -18,6 +18,7 @@ export async function migrate(inputPath: string): Promise<void> {
 
   logger.bold("\nMigration is close to be over. Here is what's left for you to do:");
   logger.step('install tailwind (https://tailwindcss.com/docs/guides/angular)');
-  logger.step(`manually migrate your bound directives (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.)\n`);
+  logger.step(`manually migrate your bound directives (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.)`);
+  logger.step('uninstall angular/flex-layout package\n');
   logger.bold('Thank you for using this migration CLI! 🎉');
 }
