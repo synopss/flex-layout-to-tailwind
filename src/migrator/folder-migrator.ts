@@ -17,24 +17,24 @@ export async function migrateFolder(folderPath: string, isRecursive: boolean = f
 
   const filesAndDirectories = await fs.promises.readdir(folderPath);
 
-  filesAndDirectories.forEach(itemPath => {
+  for (const itemPath of filesAndDirectories) {
     const currentPath = path.join(folderPath, itemPath);
     const stats = fs.statSync(currentPath);
     logger.debug(`Processing ${itemPath}`);
 
     if (shouldIgnore(baseFolder, currentPath)) {
       logger.debug(`Ignoring ${currentPath}`);
-      return;
+      continue;
     }
 
     if (stats.isFile()) {
       if (isSupportedFileExtension(path.extname(currentPath))) {
-        migrateFile(currentPath);
+        await migrateFile(currentPath);
       }
     } else if (stats.isDirectory()) {
-      migrateFolder(currentPath, true);
+      await migrateFolder(currentPath, true);
     }
-  });
+  }
 
   spinner.success({ text: `Migrated 📂: ${chalk.bold(folderPathBaseName)}` });
 }
