@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 import { confirm, input } from '@inquirer/prompts';
+import chalk from 'chalk';
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as process from 'process';
@@ -72,6 +73,11 @@ async function main(): Promise<void> {
 
 logger.yellow('Welcome to the Angular Flex Layout Migrator!\n');
 logger.bold('This tool will help you migrate your Angular Flex-Layout attributes to tailwind classes\n');
-logger.blue(`${ATTRIBUTES_HANDLED} are all attributes that will be migrated\n`);
+logger.step(`${ATTRIBUTES_HANDLED} are all attributes that will be migrated`);
+logger.step(
+  `Bound attributes (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.) are ${chalk.bold(
+    'not supported',
+  )} by this migrator\n`,
+);
 
 main();

@@ -11,11 +11,17 @@ export const logger = {
   bold: logBold,
   debug: logDebug,
   error: logError,
+  step: logStep,
+  warning: logWarning,
   yellow: logYellow,
 } as const;
 
 function logBlue(text: string): void {
   console.log(chalk.blue(text));
+}
+
+function logBold(text: string): void {
+  console.log(chalk.bold(text));
 }
 
 function logDebug(text: string): void {
@@ -26,8 +32,12 @@ function logError(text: string): void {
   console.error(chalk.red(`Error: ${text}`));
 }
 
-function logBold(text: string): void {
-  console.log(chalk.bold(text));
+function logStep(text: string): void {
+  console.log(chalk.blue('> ') + text);
+}
+
+function logWarning(text: string): void {
+  console.log(chalk.yellow('⚠ ') + text);
 }
 
 function logYellow(text: string): void {

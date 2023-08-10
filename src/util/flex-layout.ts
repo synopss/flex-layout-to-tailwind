@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { Cheerio, CheerioAPI, Element } from 'cheerio';
 import { NodeWithChildren } from 'domhandler';
 
@@ -15,7 +16,7 @@ export const FLEX_LAYOUT_ATTRIBUTES = [
   'fxFill',
 ];
 
-export const ATTRIBUTES_HANDLED = FLEX_LAYOUT_ATTRIBUTES.join(', ');
+export const ATTRIBUTES_HANDLED = FLEX_LAYOUT_ATTRIBUTES.map(value => chalk.bold(value)).join(', ');
 
 export function findElementsWithFxAttributes($: CheerioAPI): Cheerio<Element>[] {
   const elements: Cheerio<Element>[] = [];
