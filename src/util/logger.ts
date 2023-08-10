@@ -19,7 +19,7 @@ function logBlue(text: string): void {
 }
 
 function logDebug(text: string): void {
-  DEBUG && console.debug(`Debug: ${text}`);
+  DEBUG && console.debug(chalk.yellow('ⓘ ') + text);
 }
 
 function logError(text: string): void {

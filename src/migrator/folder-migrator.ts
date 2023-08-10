@@ -1,4 +1,6 @@
+import chalk from 'chalk';
 import fs from 'fs';
+import { createSpinner } from 'nanospinner';
 import path from 'path';
 import { shouldIgnore } from '../util/gitignore';
 import { logger } from '../util/logger';
@@ -10,6 +12,8 @@ export async function migrateFolder(folderPath: string, isRecursive: boolean = f
   if (!isRecursive) {
     baseFolder = folderPath;
   }
+  const folderPathBaseName = path.basename(folderPath);
+  const spinner = createSpinner(`Migrating 📂: ${chalk.bold(folderPathBaseName)}`).start();
 
   const filesAndDirectories = await fs.promises.readdir(folderPath);
 
@@ -31,4 +35,6 @@ export async function migrateFolder(folderPath: string, isRecursive: boolean = f
       migrateFolder(currentPath, true);
     }
   });
+
+  spinner.success({ text: `Migrated 📂: ${chalk.bold(folderPathBaseName)}` });
 }
