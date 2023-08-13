@@ -39,6 +39,7 @@
     "@inquirer/prompts": "^3.0.2",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
+    "classnames": "^2.3.2",
     "commander": "^11.0.0",
     "nanospinner": "^1.1.0"
   },

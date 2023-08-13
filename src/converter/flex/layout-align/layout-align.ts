@@ -1,4 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
+import classNames from 'classnames';
 import {
   TAILWIND_COLUMN_VALUES,
   TAILWIND_FLEX_VALUES,
@@ -10,7 +11,7 @@ export function convertFxLayoutAlignToTailwind($element: Cheerio<Element>, value
   const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);
   const [flex, direction, dimension] = validateParent($element);
 
-  $element.addClass(`${flex} ${direction} ${mainAxis} ${crossAxis} ${dimension}`).removeAttr('fxLayoutAlign');
+  $element.addClass(classNames(flex, direction, mainAxis, crossAxis, dimension)).removeAttr('fxLayoutAlign');
 }
 
 function validateFxLayoutAlignValue(value: string) {

@@ -1,4 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
+import classNames from 'classnames';
 import { toTailwindValue } from '../../../util/tailwind';
 
 export function convertFxFlexToTailwind(
@@ -43,7 +44,7 @@ export function convertFxFlexToTailwind(
   }
 
   const { grow, shrink, basis } = validateFxFlexValue(value, fxGrow, fxShrink);
-  updateElement($element, `${grow} ${shrink} ${basis}`);
+  updateElement($element, classNames(grow, shrink, basis));
 }
 
 function updateElement($element: Cheerio<Element>, classes: string): void {

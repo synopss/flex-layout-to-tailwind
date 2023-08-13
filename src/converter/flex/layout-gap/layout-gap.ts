@@ -1,4 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
+import classNames from 'classnames';
 import { isArbitraryValue, TAILWIND_COLUMN_VALUES, TAILWIND_ROW_VALUES, toTailwindValue } from '../../../util/tailwind';
 import { validateFxLayoutValue } from '../layout/layout';
 
@@ -6,7 +7,7 @@ export function convertFxLayoutGapToTailwind($element: Cheerio<Element>, fxLayou
   const { direction, flex } = validateFxLayoutValue(fxLayout);
   const { gap, child } = validateFxLayoutGapValue(value, direction);
 
-  $element.addClass(`${flex} ${gap}`).removeAttr('fxLayoutGap').children().addClass(child);
+  $element.addClass(classNames(flex, gap)).removeAttr('fxLayoutGap').children().addClass(child);
 }
 
 function validateFxLayoutGapValue(value: string, direction: string) {
