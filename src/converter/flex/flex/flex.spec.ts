@@ -96,4 +96,12 @@ describe('fxFlex directive migration', () => {
   it('should convert fxFlex with a value while overriding fxGrow and fxShrink', () => {
     expectValidConversion(`<div fxFlex="1 1 0%" fxShrink="2" fxGrow="1"></div>`, 'flex-1');
   });
+
+  it('should convert fxFlex with breakpoint', () => {
+    expectValidConversion(`<div fxFlex.xs></div>`, 'xs:flex-1');
+  });
+
+  it('should convert fxFlex, fxShrink and fxGrow with breakpoint', () => {
+    expectValidConversion(`<div fxFlex.xs fxShrink="1" fxGrow="1"></div>`, 'xs:grow xs:shrink xs:basis-0');
+  });
 });

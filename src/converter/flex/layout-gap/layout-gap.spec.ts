@@ -65,4 +65,13 @@ describe('fxLayoutGap directive migration', () => {
     expectValidConversion(`<div fxLayoutGap="10vw grid"><div>child</div></div>`, 'flex -mr-[10vw] -mb-[10vw]');
     expectValidChildConversion(`<div fxLayoutGap="10vw grid"><div>child</div></div>`, 'pr-[10vw] pb-[10vw]');
   });
+
+  it('should convert fxLayoutGap with breakpoint', () => {
+    expectValidConversion(`<div fxLayoutGap.xs></div>`, 'xs:flex');
+  });
+
+  it('should convert fxLayoutGap with grid and breakpoint"', () => {
+    expectValidConversion(`<div fxLayoutGap.xs="20px grid"><div>child</div></div>`, 'xs:flex xs:-mr-5 xs:-mb-5');
+    expectValidChildConversion(`<div fxLayoutGap.xs="20px grid"><div>child</div></div>`, 'xs:pr-5 xs:pb-5');
+  });
 });

@@ -37,34 +37,34 @@ This following tables show all attributes covered by the migration from this CLI
 
 ### API for DOM containers
 
-| Flex-Layout Attribute | Static API         | Responsive API |
-|-----------------------|--------------------|----------------|
-| fxLayout              | :white_check_mark: | :x:            |
-| fxLayoutAlign         | :white_check_mark: | :x:            |
-| fxLayoutGap           | :white_check_mark: | :x:            |
-| gdAlignColumns        | :x:                | :x:            |
-| gdAlignRows           | :x:                | :x:            |
-| gdAreas               | :x:                | :x:            |
-| gdAuto                | :x:                | :x:            |
-| gdColumns             | :x:                | :x:            |
-| gdGap                 | :x:                | :x:            |
-| gdGridAlign           | :x:                | :x:            |
-| gdRows                | :x:                | :x:            |
+| Flex-Layout Attribute | Static API         | Responsive API     |
+|-----------------------|--------------------|--------------------|
+| fxLayout              | :white_check_mark: | :white_check_mark: |
+| fxLayoutAlign         | :white_check_mark: | :white_check_mark: |
+| fxLayoutGap           | :white_check_mark: | :white_check_mark: |
+| gdAlignColumns        | :x:                | :x:                |
+| gdAlignRows           | :x:                | :x:                |
+| gdAreas               | :x:                | :x:                |
+| gdAuto                | :x:                | :x:                |
+| gdColumns             | :x:                | :x:                |
+| gdGap                 | :x:                | :x:                |
+| gdGridAlign           | :x:                | :x:                |
+| gdRows                | :x:                | :x:                |
 
 
 ### API for DOM elements
 
-| Flex-Layout Attribute    | Static API         | Responsive API |
-|--------------------------|--------------------|----------------|
-| fxFlex, fxGrow, fxShrink | :white_check_mark: | :x:            |
-| fxFlexOrder              | :white_check_mark: | :x:            |
-| fxFlexOffset             | :white_check_mark: | :x:            |
-| fxFlexAlign              | :white_check_mark: | :x:            |
-| fxFlexFill, fxFill       | :white_check_mark: | No API         |
-| gdArea                   | :x:                | :x:            |
-| gdColumn                 | :x:                | :x:            |
-| gdRow                    | :x:                | :x:            |
-| gdGridAlign              | :x:                | :x:            |
+| Flex-Layout Attribute    | Static API         | Responsive API     |
+|--------------------------|--------------------|--------------------|
+| fxFlex, fxGrow, fxShrink | :white_check_mark: | :white_check_mark: |
+| fxFlexOrder              | :white_check_mark: | :white_check_mark: |
+| fxFlexOffset             | :white_check_mark: | :white_check_mark: |
+| fxFlexAlign              | :white_check_mark: | :white_check_mark: |
+| fxFlexFill, fxFill       | :white_check_mark: | No API             |
+| gdArea                   | :x:                | :x:                |
+| gdColumn                 | :x:                | :x:                |
+| gdRow                    | :x:                | :x:                |
+| gdGridAlign              | :x:                | :x:                |
 
 ### API for any element
 

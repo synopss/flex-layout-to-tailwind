@@ -106,4 +106,8 @@ describe('fxLayout directive migration', () => {
       'inline-flex flex-col-reverse flex-nowrap',
     );
   });
+
+  it('should convert fxLayout with breakpoint', () => {
+    expectValidConversion(`<div fxLayout.xs></div>`, 'xs:flex xs:flex-row');
+  });
 });

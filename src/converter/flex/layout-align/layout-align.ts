@@ -1,5 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
-import classNames from 'classnames';
+import { Breakpoint, classesWithBreakpoint, flexLayoutAttribute } from '../../../util/breakpoint';
 import {
   TAILWIND_COLUMN_VALUES,
   TAILWIND_FLEX_VALUES,
@@ -7,11 +7,17 @@ import {
   TAILWIND_ROW_VALUES,
 } from '../../../util/tailwind';
 
-export function convertFxLayoutAlignToTailwind($element: Cheerio<Element>, value: string): void {
+export function convertFxLayoutAlignToTailwind(
+  $element: Cheerio<Element>,
+  value: string,
+  breakpoint: Breakpoint | undefined,
+): void {
   const { mainAxis, crossAxis } = validateFxLayoutAlignValue(value);
   const [flex, direction, dimension] = validateParent($element);
 
-  $element.addClass(classNames(flex, direction, mainAxis, crossAxis, dimension)).removeAttr('fxLayoutAlign');
+  $element
+    .addClass(classesWithBreakpoint(`${flex} ${direction} ${mainAxis} ${crossAxis} ${dimension}`, breakpoint))
+    .removeAttr(flexLayoutAttribute('fxLayoutAlign', breakpoint));
 }
 
 function validateFxLayoutAlignValue(value: string) {

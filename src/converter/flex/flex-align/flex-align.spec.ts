@@ -32,4 +32,8 @@ describe('fxFlexAlign directive migration', () => {
   it('should convert fxFlexAlign="auto"', () => {
     expectValidConversion(`<div fxFlexAlign="auto"></div>`, 'self-auto');
   });
+
+  it('should convert fxFlexAlign with breakpoint', () => {
+    expectValidConversion(`<div fxFlexAlign.xs></div>`, 'xs:self-stretch');
+  });
 });

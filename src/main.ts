@@ -75,7 +75,7 @@ logger.yellow('Welcome to the Angular Flex Layout Migrator!\n');
 logger.bold('This tool will help you migrate your Angular Flex-Layout attributes to tailwind classes\n');
 logger.step(`${ATTRIBUTES_HANDLED} are all attributes that will be migrated`);
 logger.step(
-  `Bound attributes (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.) are ${chalk.bold(
+  `Binded attributes (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.) are ${chalk.bold(
     'not supported',
   )} by this migrator\n`,
 );

@@ -6,6 +6,6 @@ describe('fxFlexFill & fxFill directives migration', () => {
   });
 
   it('should convert fxFill', () => {
-    expectValidConversion(`<div fxFlexFill=""></div>`, 'h-full w-full min-h-full min-w-full');
+    expectValidConversion(`<div fxFill=""></div>`, 'h-full w-full min-h-full min-w-full');
   });
 });

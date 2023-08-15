@@ -36,4 +36,8 @@ describe('fxFlexOrder directive migration', () => {
   it('should convert fxFlexOrder="-9999"', () => {
     expectValidConversion(`<div fxFlexOrder="-9999"></div>`, 'order-first');
   });
+
+  it('should convert fxFlexOrder with breakpoint', () => {
+    expectValidConversion(`<div fxFlexOrder.xs></div>`, 'xs:order-none');
+  });
 });

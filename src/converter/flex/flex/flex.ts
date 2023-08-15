@@ -1,5 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
-import classNames from 'classnames';
+import { Breakpoint, classesWithBreakpoint, flexLayoutAttribute } from '../../../util/breakpoint';
 import { toTailwindValue } from '../../../util/tailwind';
 
 export function convertFxFlexToTailwind(
@@ -7,48 +7,53 @@ export function convertFxFlexToTailwind(
   value: string,
   fxGrow: string,
   fxShrink: string,
+  breakpoint: Breakpoint | undefined,
 ): void {
   if (!value && !(fxGrow || fxShrink)) {
-    updateElement($element, 'flex-1');
+    updateElement($element, 'flex-1', breakpoint);
     return;
   }
 
   if (value === '1 1 0%') {
-    updateElement($element, 'flex-1');
+    updateElement($element, 'flex-1', breakpoint);
     return;
   }
 
   if (value === '1 1 auto' || (value === 'auto' && !(fxGrow || fxShrink))) {
-    updateElement($element, 'flex-auto');
+    updateElement($element, 'flex-auto', breakpoint);
     return;
   }
 
   if (value === '0 1 auto' || value === 'initial' || value === 'nogrow') {
-    updateElement($element, 'flex-initial');
+    updateElement($element, 'flex-initial', breakpoint);
     return;
   }
 
   if (value === '0 0 auto' || value === 'none') {
-    updateElement($element, 'flex-none');
+    updateElement($element, 'flex-none', breakpoint);
     return;
   }
 
   if (value === 'grow') {
-    updateElement($element, 'basis-full');
+    updateElement($element, 'basis-full', breakpoint);
     return;
   }
 
   if (value === 'noshrink') {
-    updateElement($element, 'grow shrink-0 basis-auto');
+    updateElement($element, 'grow shrink-0 basis-auto', breakpoint);
     return;
   }
 
   const { grow, shrink, basis } = validateFxFlexValue(value, fxGrow, fxShrink);
-  updateElement($element, classNames(grow, shrink, basis));
+  updateElement($element, `${grow} ${shrink} ${basis}`, breakpoint);
 }
 
-function updateElement($element: Cheerio<Element>, classes: string): void {
-  $element.addClass(classes).removeAttr('fxFlex').removeAttr('fxGrow').removeAttr('fxShrink');
+function updateElement($element: Cheerio<Element>, classes: string, breakpoint: Breakpoint | undefined): void {
+  $element
+    .addClass(classesWithBreakpoint(classes, breakpoint))
+    .removeAttr(flexLayoutAttribute('fxFlex', breakpoint))
+    .removeAttr(flexLayoutAttribute('fxGrow', breakpoint))
+    .removeAttr(flexLayoutAttribute('fxShrink', breakpoint));
 }
 
 function validateFxFlexValue(value: string, fxGrow: string, fxShrink: string) {

@@ -33,35 +33,43 @@ describe('fxFlexOffset directives migration', () => {
     expectValidConversion(`<div fxFlexOffset="15vw"></div>`, 'ml-[15vw]');
   });
 
-  it('should convert fxFlexOffset with no value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with no value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset></div></div>`, 'mt-0');
   });
 
-  it('should convert fxLayout with empty value  with parent flex direction being column', () => {
+  it('should convert fxLayout with empty value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset=""></div></div>`, 'mt-0');
   });
 
-  it('should convert fxFlexOffset with value with no unit  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with value with no unit with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="20"></div></div>`, 'mt-[20%]');
   });
 
-  it('should convert fxFlexOffset with % value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with % value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="20%"></div></div>`, 'mt-[20%]');
   });
 
-  it('should convert fxFlexOffset with valid tailwind px value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with valid tailwind px value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="8px"></div></div>`, 'mt-2');
   });
 
-  it('should convert fxFlexOffset with non-valid tailwind px value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with non-valid tailwind px value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="33px"></div></div>`, 'mt-[33px]');
   });
 
-  it('should convert fxFlexOffset with vh value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with vh value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="18vh"></div></div>`, 'mt-[18vh]');
   });
 
-  it('should convert fxFlexOffset with vw value  with parent flex direction being column', () => {
+  it('should convert fxFlexOffset with vw value with parent flex direction being column', () => {
     expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset="15vw"></div></div>`, 'mt-[15vw]');
+  });
+
+  it('should convert fxFlexOffset with breakpoint', () => {
+    expectValidConversion(`<div fxFlexOffset.xs></div>`, 'xs:ml-0');
+  });
+
+  it('should convert fxFlexOffset with breakpoint with parent flex direction being column', () => {
+    expectValidConversion(`<div class="flex flex-col"><div fxFlexOffset.xs></div></div>`, 'xs:mt-0');
   });
 });

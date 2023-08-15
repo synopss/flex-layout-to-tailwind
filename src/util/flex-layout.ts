@@ -14,7 +14,9 @@ export const FLEX_LAYOUT_ATTRIBUTES = [
   'fxFlexAlign',
   'fxFlexFill',
   'fxFill',
-];
+] as const;
+
+export type FlexLayoutAttribute = (typeof FLEX_LAYOUT_ATTRIBUTES)[number];
 
 export const ATTRIBUTES_HANDLED = FLEX_LAYOUT_ATTRIBUTES.map(value => chalk.bold(value)).join(', ');
 

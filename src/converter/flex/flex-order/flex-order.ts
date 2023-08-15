@@ -1,9 +1,16 @@
 import { Cheerio, Element } from 'cheerio';
+import { Breakpoint, classWithBreakpoint, flexLayoutAttribute } from '../../../util/breakpoint';
 
-export function convertFxFlexOrderToTailwind($element: Cheerio<Element>, value: string): void {
+export function convertFxFlexOrderToTailwind(
+  $element: Cheerio<Element>,
+  value: string,
+  breakpoint: Breakpoint | undefined,
+): void {
   const classValue = validateFxFlexOrderValue(value);
 
-  $element.addClass(classValue).removeAttr('fxFlexOrder');
+  $element
+    .addClass(classWithBreakpoint(classValue, breakpoint))
+    .removeAttr(flexLayoutAttribute('fxFlexOrder', breakpoint));
 }
 
 function validateFxFlexOrderValue(value: string): string {

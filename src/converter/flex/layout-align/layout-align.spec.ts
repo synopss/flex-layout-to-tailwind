@@ -396,4 +396,11 @@ describe('fxLayoutAlign directive migration', () => {
       'flex justify-evenly content-baseline items-baseline',
     );
   });
+
+  it('should convert fxLayoutAlign with breakpoint', () => {
+    expectValidConversion(
+      `<div fxLayoutAlign.xs></div>`,
+      'xs:flex xs:justify-start xs:content-stretch xs:items-stretch',
+    );
+  });
 });
