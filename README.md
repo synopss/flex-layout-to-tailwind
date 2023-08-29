@@ -68,13 +68,13 @@ This following tables show all attributes covered by the migration from this CLI
 
 ### API for any element
 
-| Flex-Layout Attribute | Static API | Responsive API |
-|-----------------------|------------|----------------|
-| fxHide                | :x:        | :x:            |
-| fxShow                | :x:        | :x:            |
-| ngClass               | :x:        | :x:            |
-| ngStyle               | :x:        | :x:            |
-| imgSrc                | :x:        | :x:            |
+| Flex-Layout Attribute | Static API         | Responsive API     |
+|-----------------------|--------------------|--------------------|
+| fxHide                | :white_check_mark: | :white_check_mark: |
+| fxShow                | :white_check_mark: | :white_check_mark: |
+| ngClass               | :x:                | :x:                |
+| ngStyle               | :x:                | :x:                |
+| imgSrc                | :x:                | :x:                |
 
 ## Contributing
 

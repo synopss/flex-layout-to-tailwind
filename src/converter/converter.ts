@@ -1,6 +1,7 @@
 import { Cheerio, CheerioAPI, Element } from 'cheerio';
 import { attributeWithBreakpoints, Breakpoint } from '../util/breakpoint';
 import { FlexLayoutAttribute } from '../util/flex-layout';
+import { convertFxHideToTailwind, convertFxShowToTailwind } from './extended/show-hide';
 import { convertFxFlexAlignToTailwind } from './flex/flex-align/flex-align';
 import { convertFxFlexFillToTailwind } from './flex/flex-fill/flex-fill';
 import { convertFxFlexOffsetToTailwind } from './flex/flex-offset/flex-offset';
@@ -34,40 +35,52 @@ export function convertFile($: CheerioAPI): void {
     let fxFlexAlignBreakpoint: Breakpoint | undefined;
     let fxFlexOffset: string | undefined;
     let fxFlexOffsetBreakpoint: Breakpoint | undefined;
+    let fxHide: string | undefined;
+    let fxHideBreakpoint: Breakpoint | undefined;
+    let fxShow: string | undefined;
+    let fxShowBreakpoint: Breakpoint | undefined;
 
     elementNames.forEach(elementName => {
       const elementSplitted = elementName.split('.');
       const elementNameWithoutBreakpoint = elementSplitted[0] as FlexLayoutAttribute;
+      const value = $element.attr(elementName);
+      const breakpoint = elementSplitted[1] as Breakpoint;
 
       if (elementNameWithoutBreakpoint === 'fxLayout') {
-        fxLayout = $element.attr(elementName);
-        fxLayoutBreakpoint = elementSplitted[1] as Breakpoint;
+        fxLayout = value;
+        fxLayoutBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxLayoutGap') {
-        fxLayoutGap = $element.attr(elementName);
-        fxLayoutGapBreakpoint = elementSplitted[1] as Breakpoint;
+        fxLayoutGap = value;
+        fxLayoutGapBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxLayoutAlign') {
-        fxLayoutAlign = $element.attr(elementName);
-        fxLayoutAlignBreakpoint = elementSplitted[1] as Breakpoint;
+        fxLayoutAlign = value;
+        fxLayoutAlignBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxFlex') {
-        fxFlex = $element.attr(elementName);
-        fxFlexBreakpoint = elementSplitted[1] as Breakpoint;
+        fxFlex = value;
+        fxFlexBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxGrow') {
-        fxGrow = $element.attr(elementName);
+        fxGrow = value;
       } else if (elementNameWithoutBreakpoint === 'fxShrink') {
-        fxShrink = $element.attr(elementName);
+        fxShrink = value;
       } else if (elementNameWithoutBreakpoint === 'fxFill') {
-        fxFill = $element.attr(elementName);
+        fxFill = value;
       } else if (elementNameWithoutBreakpoint === 'fxFlexFill') {
-        fxFlexFill = $element.attr(elementName);
+        fxFlexFill = value;
       } else if (elementNameWithoutBreakpoint === 'fxFlexOrder') {
-        fxFlexOrder = $element.attr(elementName);
-        fxFlexOrderBreakpoint = elementSplitted[1] as Breakpoint;
+        fxFlexOrder = value;
+        fxFlexOrderBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxFlexAlign') {
-        fxFlexAlign = $element.attr(elementName);
-        fxFlexAlignBreakpoint = elementSplitted[1] as Breakpoint;
+        fxFlexAlign = value;
+        fxFlexAlignBreakpoint = breakpoint;
       } else if (elementNameWithoutBreakpoint === 'fxFlexOffset') {
-        fxFlexOffset = $element.attr(elementName);
-        fxFlexOffsetBreakpoint = elementSplitted[1] as Breakpoint;
+        fxFlexOffset = value;
+        fxFlexOffsetBreakpoint = breakpoint;
+      } else if (elementNameWithoutBreakpoint === 'fxHide') {
+        fxHide = value;
+        fxHideBreakpoint = breakpoint;
+      } else if (elementNameWithoutBreakpoint === 'fxShow') {
+        fxShow = value;
+        fxShowBreakpoint = breakpoint;
       }
     });
 
@@ -101,6 +114,14 @@ export function convertFile($: CheerioAPI): void {
 
     if (fxFlexOffset !== undefined) {
       convertFxFlexOffsetToTailwind($element, fxFlexOffset ?? '', fxFlexOffsetBreakpoint);
+    }
+
+    if (fxHide !== undefined) {
+      convertFxHideToTailwind($element, fxHide, fxHideBreakpoint);
+    }
+
+    if (fxShow !== undefined) {
+      convertFxShowToTailwind($element, fxShow, fxShowBreakpoint);
     }
   });
 }

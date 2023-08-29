@@ -14,6 +14,8 @@ const BREAKPOINT_MAP: Record<FlexLayoutAttribute, boolean> = {
   fxFlexAlign: true,
   fxFlexFill: true,
   fxFill: true,
+  fxShow: true,
+  fxHide: true,
 };
 
 const FLEX_LAYOUT_BREAKPOINTS = [
@@ -81,6 +83,8 @@ export const attributeWithBreakpoints: Element = getAttributeWithBreakpoints([
   'fxFlexAlign',
   'fxFlexFill',
   'fxFill',
+  'fxShow',
+  'fxHide',
 ])
   .map((attribute: FlexLayoutAttributeWithBreakpoint) => `[${attribute.replace('.', '\\.')}]`)
   .join(', ') as unknown as Element;
