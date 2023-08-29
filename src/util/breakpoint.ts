@@ -40,14 +40,14 @@ const BREAKPOINT_MAPPING: { [key in Breakpoint]: string } = {
   md: 'md',
   lg: 'lg',
   xl: 'xl',
-  'lt-sm': 'xs',
-  'lt-md': 'sm',
-  'lt-lg': 'md',
-  'lt-xl': 'lg',
-  'gt-xs': 'sm',
-  'gt-sm': 'md',
-  'gt-md': 'lg',
-  'gt-lg': 'xl',
+  'lt-sm': 'lt-sm',
+  'lt-md': 'lt-md',
+  'lt-lg': 'lt-lg',
+  'lt-xl': 'lt-xl',
+  'gt-xs': 'gt-xs',
+  'gt-sm': 'gt-sm',
+  'gt-md': 'gt-md',
+  'gt-lg': 'gt-lg',
 };
 
 export type Breakpoint = (typeof FLEX_LAYOUT_BREAKPOINTS)[number];
