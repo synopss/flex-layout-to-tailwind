@@ -8,7 +8,7 @@ import { readPackageVersion } from '../util/cli';
 import { unshiftFile } from '../util/file-utils';
 import { logger } from '../util/logger';
 
-export async function tailwindInstall(input: string) {
+export async function setupTailwind(input: string) {
   await addTailwindConfigFile(input);
   addCSSDirectives(input);
 }

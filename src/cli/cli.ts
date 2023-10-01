@@ -1,10 +1,10 @@
-import { confirm, input } from '@inquirer/prompts';
+import { input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import * as process from 'process';
 import { migrate } from '../migrator/migrator';
 import { logger, setDebugMode } from '../util/logger';
 import { updateDependencies } from './dependencies-update';
-import { tailwindInstall } from './tailwind-install';
+import { setupTailwind } from './setup-tailwind';
 
 interface ProgramOptions {
   input: string;
@@ -15,14 +15,17 @@ interface ProgramOptions {
 export const handleArguments = async (options: ProgramOptions) => {
   try {
     let input = options.input;
-    let debug = options.debug;
+    const debug = options.debug;
 
-    if (!debug) {
-      debug = await handleDebugPrompt();
-      if (debug) {
-        setDebugMode();
-      }
+    if (debug) {
+      setDebugMode();
     }
+
+    logger.bold('\n📦 Installing dependencies\n');
+
+    updateDependencies(input);
+
+    await setupTailwind(input);
 
     if (input) {
       await migrate(input);
@@ -30,11 +33,6 @@ export const handleArguments = async (options: ProgramOptions) => {
       input = await handleInputPrompt();
       await migrate(input);
     }
-
-    logger.bold('\n📦 Installing dependencies\n');
-    updateDependencies(input);
-
-    await tailwindInstall(input);
 
     logger.bold("\nMigration is close to be over. Here is what's left for you to do:");
     logger.step(`manually migrate your binded directives (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.)`);
@@ -47,8 +45,4 @@ export const handleArguments = async (options: ProgramOptions) => {
 
 async function handleInputPrompt(): Promise<string> {
   return input({ message: 'Enter your project path to migrate' });
-}
-
-async function handleDebugPrompt(): Promise<boolean> {
-  return confirm({ message: 'Do you want to use DEBUG mode ?' });
 }
