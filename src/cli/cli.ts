@@ -3,10 +3,12 @@ import chalk from 'chalk';
 import fs from 'fs';
 import { createSpinner } from 'nanospinner';
 import path from 'path';
+import * as process from 'process';
 import semver from 'semver/preload';
 import { migrate } from '../migrator/migrator';
 import { readPackageVersion } from '../util/cli';
 import { logger, setDebugMode } from '../util/logger';
+import { updateDependencies } from './packages-install';
 
 interface ProgramOptions {
   input: string;
@@ -44,8 +46,8 @@ export const handleArguments = async (options: ProgramOptions) => {
 
       const spinner = createSpinner(`Creating 📄: ${chalk.bold(tailwindConfigFilePath)}`).start();
 
-      const stubContentsFile = fs.readFileSync(path.resolve(__dirname, '../stubs/config.js'), 'utf-8');
-      let stubFile = fs.readFileSync(path.resolve(__dirname, `../stubs/${tailwindConfigFilePath}`), 'utf-8');
+      const stubContentsFile = fs.readFileSync(path.resolve(__dirname, '../../stubs/config.js'), 'utf-8');
+      let stubFile = fs.readFileSync(path.resolve(__dirname, `../../stubs/${tailwindConfigFilePath}`), 'utf-8');
 
       stubFile = stubFile.replace('__CONFIG__', stubContentsFile.replace('module.exports =', '').trim()).trim() + '\n';
 
@@ -54,13 +56,16 @@ export const handleArguments = async (options: ProgramOptions) => {
       spinner.success({ text: `Created 📄: ${chalk.bold(tailwindConfigFilePath)}` });
     }
 
+    logger.bold('\n📦 Installing dependencies\n');
+    updateDependencies(input);
+
     logger.bold("\nMigration is close to be over. Here is what's left for you to do:");
     logger.step('install tailwind (https://tailwindcss.com/docs/guides/angular)');
     logger.step(`manually migrate your binded directives (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.)`);
-    logger.step('uninstall angular/flex-layout package\n');
     logger.bold('Thank you for using this migration CLI! 🎉');
   } catch (error) {
     logger.error(`Failed to execute the command. ${error}`);
+    process.exit(1);
   }
 };
 

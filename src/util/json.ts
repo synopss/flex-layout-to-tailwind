@@ -19,6 +19,14 @@ export interface JsonParseOptions extends ParseOptions {
   allowTrailingComma?: boolean;
 }
 
+export interface JsonSerializeOptions {
+  /**
+   * the whitespaces to add as indentation to make the output more readable.
+   * @default 2
+   */
+  spaces?: number;
+}
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function parseJson<T extends object = any>(input: string, options?: JsonParseOptions): T {
   try {
@@ -46,4 +54,8 @@ function formatParseError(input: string, parseError: ParseError) {
   column++;
 
   return `${printParseErrorCode(error)} in JSON at ${line}:${column}\n`;
+}
+
+export function serializeJson<T extends object = object>(input: T, options?: JsonSerializeOptions): string {
+  return JSON.stringify(input, null, options?.spaces ?? 2) + '\n';
 }
