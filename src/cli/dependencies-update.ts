@@ -8,6 +8,7 @@ const packagesToUninstall = ['@angular/flex-layout'];
 export function updateDependencies(root: string): void {
   updatePackageJson(root);
   runInstall(root);
+  console.log('\n');
 }
 
 function updatePackageJson(root: string) {

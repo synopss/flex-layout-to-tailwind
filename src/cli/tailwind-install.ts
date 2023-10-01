@@ -5,8 +5,14 @@ import { createSpinner } from 'nanospinner';
 import path from 'path';
 import semver from 'semver/preload';
 import { readPackageVersion } from '../util/cli';
+import { unshiftFile } from '../util/file-utils';
 
 export async function tailwindInstall(input: string) {
+  await addTailwindConfigFile(input);
+  addCSSDirectives(input);
+}
+
+async function addTailwindConfigFile(input: string) {
   const tailwindConfigLocation =
     path.resolve(`${input}/tailwind.config.js`) ||
     path.resolve(`${input}/tailwind.config.ts`) ||
@@ -69,4 +75,22 @@ async function handleTailwindConfigFile(input: string): Promise<'js' | 'ts' | 'c
       },
     ],
   });
+}
+
+function addCSSDirectives(input: string) {
+  const content = '@tailwind base;\n' + '@tailwind components;\n' + '@tailwind utilities;\n';
+
+  const regex = /styles.(css|scss|sass|less)$/;
+  const stylesFile = fs.readdirSync(`${input}/src/`).find(file => RegExp(regex).exec(file));
+
+  const spinnerContent = chalk.bold(`src/${stylesFile}`);
+  const spinner = createSpinner(`Handling 📄: ${spinnerContent}`).start();
+
+  if (stylesFile) {
+    unshiftFile(`${input}/src/${stylesFile}`, content);
+    spinner.success({ text: `Updated 📄: ${spinnerContent}` });
+  } else {
+    fs.writeFileSync(`${input}/src/styles.css`, content);
+    spinner.success({ text: `Created 📄: ${spinnerContent}` });
+  }
 }
