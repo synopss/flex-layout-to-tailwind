@@ -1,5 +1,7 @@
 import { input } from '@inquirer/prompts';
 import chalk from 'chalk';
+import fs from 'fs';
+import path from 'path';
 import * as process from 'process';
 import { migrate } from '../migrator/migrator';
 import { logger, setDebugMode } from '../util/logger';
@@ -21,11 +23,19 @@ export const handleArguments = async (options: ProgramOptions) => {
       setDebugMode();
     }
 
-    logger.bold('\n📦 Installing dependencies\n');
+    const isNxProject = fs.existsSync(path.join(input, 'nx.json'));
+    if (!isNxProject) {
+      logger.bold('\n📦 Installing dependencies\n');
 
-    updateDependencies(input);
+      updateDependencies(input);
 
-    await setupTailwind(input);
+      await setupTailwind(input);
+    } else {
+      logger.warning(
+        'Nx is not supported yet, but flex-layout directives will still be replaced by tailwindcss classes. \n ' +
+          'Please read to help you finish the migration: https://blog.nrwl.io/set-up-tailwind-css-with-angular-in-an-nx-workspace-6f039a0f4479',
+      );
+    }
 
     if (input) {
       await migrate(input);
