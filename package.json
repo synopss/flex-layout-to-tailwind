@@ -1,6 +1,6 @@
 {
   "name": "flex-layout-to-tailwind",
-  "version": "0.0.1",
+  "version": "1.0.0-rc.0",
   "description": "CLI that migrates @angular/flex-layout to tailwindcss",
   "main": "./dist/main.js",
   "bin": {
