@@ -38,7 +38,7 @@ export const handleArguments = async (options: ProgramOptions) => {
 
     logger.bold("\nMigration is close to be over. Here is what's left for you to do:");
     logger.step(`manually migrate your binded directives (${chalk.bold('[')}fxFlex${chalk.bold(']')}, etc.)`);
-    logger.bold('Thank you for using this migration CLI! 🎉');
+    logger.bold('\nThank you for using this migration CLI! 🎉');
   } catch (error) {
     logger.error(`\nFailed to execute the command. ${error}`);
     process.exit(1);

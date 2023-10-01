@@ -6,6 +6,7 @@ import path from 'path';
 import semver from 'semver/preload';
 import { readPackageVersion } from '../util/cli';
 import { unshiftFile } from '../util/file-utils';
+import { logger } from '../util/logger';
 
 export async function tailwindInstall(input: string) {
   await addTailwindConfigFile(input);
@@ -13,12 +14,10 @@ export async function tailwindInstall(input: string) {
 }
 
 async function addTailwindConfigFile(input: string) {
-  const tailwindConfigLocation =
-    path.resolve(`${input}/tailwind.config.js`) ||
-    path.resolve(`${input}/tailwind.config.ts`) ||
-    path.resolve(`${input}/tailwind.config.cjs`);
+  const regex = /tailwind.config.(js|ts|cjs)$/;
+  const tailwindConfigFile = fs.readdirSync(input).find(file => RegExp(regex).exec(file));
 
-  if (!fs.existsSync(tailwindConfigLocation)) {
+  if (!tailwindConfigFile) {
     const tailwindConfigFileExtension = await handleTailwindConfigFile(input);
     const tailwindConfigFilePath = `tailwind.config.${tailwindConfigFileExtension}`;
 
@@ -32,6 +31,8 @@ async function addTailwindConfigFile(input: string) {
     fs.writeFileSync(`${input}/${tailwindConfigFilePath}`, stubFile, 'utf-8');
 
     spinner.success({ text: `Created 📄: ${chalk.bold(tailwindConfigFilePath)}` });
+  } else {
+    logger.warning(`${tailwindConfigFile} already exists`);
   }
 }
 
