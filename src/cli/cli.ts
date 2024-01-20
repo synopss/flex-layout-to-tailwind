@@ -11,6 +11,7 @@ import { setupTailwind } from './setup-tailwind';
 interface ProgramOptions {
   input: string;
   debug: boolean;
+  forceInstallDependencies: boolean;
   tailwindConfigExtension: 'js' | 'ts' | 'cjs';
 }
 
@@ -18,6 +19,7 @@ export const handleArguments = async (options: ProgramOptions) => {
   try {
     let input = options.input;
     const debug = options.debug;
+    const forceInstallDependencies: boolean = options.forceInstallDependencies || false;
 
     if (debug) {
       setDebugMode();
@@ -27,7 +29,7 @@ export const handleArguments = async (options: ProgramOptions) => {
     if (!isNxProject) {
       logger.bold('\n📦 Installing dependencies\n');
 
-      updateDependencies(input);
+      updateDependencies(input, forceInstallDependencies);
 
       await setupTailwind(input);
     } else {

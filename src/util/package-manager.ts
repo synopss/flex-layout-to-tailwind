@@ -5,6 +5,7 @@ export type PackageManager = 'yarn' | 'pnpm' | 'npm';
 
 export interface PackageManagerCommands {
   install: string;
+  forceInstall: string;
 }
 
 export function getPackageManagerCommand(
@@ -14,16 +15,19 @@ export function getPackageManagerCommand(
     yarn: () => {
       return {
         install: 'yarn',
+        forceInstall: 'yarn install --force',
       };
     },
     pnpm: () => {
       return {
         install: 'pnpm install',
+        forceInstall: 'pnpm install --force',
       };
     },
     npm: () => {
       return {
         install: 'npm install',
+        forceInstall: 'npm install --force',
       };
     },
   };

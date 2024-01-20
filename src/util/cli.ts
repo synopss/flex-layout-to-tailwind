@@ -18,6 +18,11 @@ export function getLatestVersion(packageName: string): string {
   return execSync(`npm view ${packageName} version`, { encoding: 'utf-8' }).trim();
 }
 
-export function runInstall(root: string, pmc: PackageManagerCommands = getPackageManagerCommand()) {
-  execSync(pmc.install, { stdio: [0, 1, 2], cwd: root });
+export function runInstall(
+  root: string,
+  forceInstall: boolean,
+  pmc: PackageManagerCommands = getPackageManagerCommand(),
+) {
+  if (!forceInstall) execSync(pmc.install, { stdio: [0, 1, 2], cwd: root });
+  else execSync(pmc.forceInstall, { stdio: [0, 1, 2], cwd: root });
 }
