@@ -82,46 +82,46 @@ export function convertFile($: CheerioAPI): void {
         fxShow = value;
         fxShowBreakpoint = breakpoint;
       }
+
+      if (fxLayoutAlign !== undefined) {
+        convertFxLayoutAlignToTailwind($element, fxLayoutAlign, fxLayoutAlignBreakpoint);
+      }
+
+      if (fxLayout !== undefined) {
+        convertFxLayoutToTailwind($element, fxLayout, fxLayoutBreakpoint);
+      }
+
+      if (fxLayoutGap !== undefined) {
+        convertFxLayoutGapToTailwind($element, fxLayout ?? '', fxLayoutGap, fxLayoutGapBreakpoint);
+      }
+
+      if (fxFlex !== undefined) {
+        convertFxFlexToTailwind($element, fxFlex, fxGrow ?? '', fxShrink ?? '', fxFlexBreakpoint);
+      }
+
+      if (fxFill !== undefined || fxFlexFill !== undefined) {
+        convertFxFlexFillToTailwind($element);
+      }
+
+      if (fxFlexOrder !== undefined) {
+        convertFxFlexOrderToTailwind($element, fxFlexOrder ?? '', fxFlexOrderBreakpoint);
+      }
+
+      if (fxFlexAlign !== undefined) {
+        convertFxFlexAlignToTailwind($element, fxFlexAlign ?? '', fxFlexAlignBreakpoint);
+      }
+
+      if (fxFlexOffset !== undefined) {
+        convertFxFlexOffsetToTailwind($element, fxFlexOffset ?? '', fxFlexOffsetBreakpoint);
+      }
+
+      if (fxHide !== undefined) {
+        convertFxHideToTailwind($element, fxHide, fxHideBreakpoint);
+      }
+
+      if (fxShow !== undefined) {
+        convertFxShowToTailwind($element, fxShow, fxShowBreakpoint);
+      }
     });
-
-    if (fxLayoutAlign !== undefined) {
-      convertFxLayoutAlignToTailwind($element, fxLayoutAlign, fxLayoutAlignBreakpoint);
-    }
-
-    if (fxLayout !== undefined) {
-      convertFxLayoutToTailwind($element, fxLayout, fxLayoutBreakpoint);
-    }
-
-    if (fxLayoutGap !== undefined) {
-      convertFxLayoutGapToTailwind($element, fxLayout ?? '', fxLayoutGap, fxLayoutGapBreakpoint);
-    }
-
-    if (fxFlex !== undefined) {
-      convertFxFlexToTailwind($element, fxFlex, fxGrow ?? '', fxShrink ?? '', fxFlexBreakpoint);
-    }
-
-    if (fxFill !== undefined || fxFlexFill !== undefined) {
-      convertFxFlexFillToTailwind($element);
-    }
-
-    if (fxFlexOrder !== undefined) {
-      convertFxFlexOrderToTailwind($element, fxFlexOrder ?? '', fxFlexOrderBreakpoint);
-    }
-
-    if (fxFlexAlign !== undefined) {
-      convertFxFlexAlignToTailwind($element, fxFlexAlign ?? '', fxFlexAlignBreakpoint);
-    }
-
-    if (fxFlexOffset !== undefined) {
-      convertFxFlexOffsetToTailwind($element, fxFlexOffset ?? '', fxFlexOffsetBreakpoint);
-    }
-
-    if (fxHide !== undefined) {
-      convertFxHideToTailwind($element, fxHide, fxHideBreakpoint);
-    }
-
-    if (fxShow !== undefined) {
-      convertFxShowToTailwind($element, fxShow, fxShowBreakpoint);
-    }
   });
 }
