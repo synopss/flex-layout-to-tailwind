@@ -6,7 +6,6 @@ export function convertFxHideToTailwind(
   value: string,
   breakpoint: Breakpoint | undefined,
 ): void {
-  console.log($element.attr());
   if (value === 'true' || value === '') {
     $element.addClass(classesWithBreakpoint('hidden', breakpoint)).removeAttr('fxHide');
   } else if (value === 'false') {
