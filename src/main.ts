@@ -24,6 +24,10 @@ async function main(): Promise<void> {
     setDebugMode();
   });
 
+  program.option('-F, --forceInstallDependencies', 'install dependencies forcefully', () => {
+    return true;
+  });
+
   program.action(handleArguments);
 
   try {

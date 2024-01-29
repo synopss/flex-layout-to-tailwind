@@ -5,9 +5,9 @@ import { joinPathFragments } from '../util/path';
 const packagesToInstall = ['tailwindcss', 'postcss', 'autoprefixer'];
 const packagesToUninstall = ['@angular/flex-layout'];
 
-export function updateDependencies(root: string): void {
+export function updateDependencies(root: string, forceInstall: boolean = false): void {
   updatePackageJson(root);
-  runInstall(root);
+  runInstall(root, forceInstall);
   console.log('\n');
 }
 

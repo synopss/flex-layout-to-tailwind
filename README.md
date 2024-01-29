@@ -29,6 +29,11 @@ You can also add debug option:
 fltt --input ./path/to/your/project --debug
 ```
 
+You can also install dependencies by force if dependencies are not matching (by default this flag is false):
+```bash
+fltt --input ./path/to/your/project --forceInstallDependencies
+```
+
 ## Status
 
 Flex-Layout has two APIs: a static and a responsive one. The first one is used to handle fixed values, the second one adds breakpoints to handle responsiveness.
